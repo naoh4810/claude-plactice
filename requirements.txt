@@ -1,0 +1,8 @@
+# Claude API SDK（記事生成）
+anthropic
+
+# Notion 連携（任意：学習ログを記事の素材にする場合）
+notion-client
+
+# 設定ファイル読み込み
+PyYAML
