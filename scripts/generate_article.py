@@ -126,7 +126,8 @@ def _create_message(client: anthropic.Anthropic, **kwargs):
 
 def generate_article(source_text: str, config: dict) -> str:
     client = anthropic.Anthropic()
-    model = os.environ.get("ARTICLE_MODEL", DEFAULT_MODEL)
+    # 空文字（GitHub Actions で未設定の Variable は "" になる）もデフォルトへ落とす
+    model = os.environ.get("ARTICLE_MODEL") or DEFAULT_MODEL
 
     kwargs = dict(
         model=model,
