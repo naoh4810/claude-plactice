@@ -52,6 +52,12 @@ def fetch_recent_entries(limit: int = 25) -> list[LearningEntry]:
     token = os.environ.get("NOTION_API_KEY")
     database_id = os.environ.get("NOTION_DAILY_LOG_DATABASE_ID")
     if not token or not database_id:
+        missing = []
+        if not token:
+            missing.append("NOTION_API_KEY")
+        if not database_id:
+            missing.append("NOTION_DAILY_LOG_DATABASE_ID")
+        print(f"[Notion] 未設定のためスキップ（topics.yml にフォールバック）: {', '.join(missing)}")
         return []
 
     try:
@@ -68,7 +74,7 @@ def fetch_recent_entries(limit: int = 25) -> list[LearningEntry]:
             page_size=min(limit, 100),
         )
     except Exception as exc:  # 接続・権限・スキーマ差異など何が起きても止めない
-        print(f"Notion からの取得に失敗しました（フォールバックします）: {exc}")
+        print(f"[Notion] 取得に失敗（topics.yml にフォールバック）: {exc}")
         return []
 
     entries: list[LearningEntry] = []
@@ -94,4 +100,5 @@ def fetch_recent_entries(limit: int = 25) -> list[LearningEntry]:
                 practice_level=practice,
             )
         )
+    print(f"[Notion] 学習ログを {len(entries)} 件取得しました。")
     return entries
