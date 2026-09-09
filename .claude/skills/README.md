@@ -12,6 +12,7 @@
 | スキル | 呼び出し | 説明 | Scope | Status |
 |---|---|---|---|---|
 | notion-daily-log | `/notion-daily-log` | その日の作業を Notion「デイリー学習ログ」に1件追加する | リポジトリ | 有効 |
+| notion-learning-backlog | `/notion-learning-backlog` | 「学びたいこと」を Notion「学びたいことリスト」に追加・一覧・ステータス更新する | リポジトリ | 有効 |
 | skill-catalog-add | `/skill-catalog-add` | 作ったスキルを Notion「スキルカタログ」に1行登録する | リポジトリ | 有効 |
 | skill-catalog-sync | `/skill-catalog-sync` | 全スキルをスキャンして、この索引と Notion カタログを差分更新する（削除はしない） | リポジトリ | 有効 |
 
