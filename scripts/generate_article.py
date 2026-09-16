@@ -68,10 +68,20 @@ def load_config() -> dict:
 
 def pick_topic(config: dict, used: set[str]) -> tuple[str, str, str] | None:
     """(key, title, source_text) を返す。使えるトピックが無ければ None。"""
+    exclude = [k for k in config.get("settings", {}).get("exclude_keywords", []) if k]
+
+    def is_excluded(text: str) -> bool:
+        return any(word in text for word in exclude)
+
     # 1) Notion 学習ログ（新しい順で未使用の最初の1件）
     for entry in fetch_recent_entries():
-        if entry.key not in used:
-            return entry.key, entry.title, entry.as_source_text()
+        if entry.key in used:
+            continue
+        # 営業・移動ログや会議メモなど、技術記事に向かない学びは飛ばす
+        if is_excluded(entry.title):
+            print(f"[skip] 除外キーワードに一致するためスキップ: {entry.title}")
+            continue
+        return entry.key, entry.title, entry.as_source_text()
 
     # 2) フォールバック: topics.yml のキュー
     for item in config.get("queue", []):

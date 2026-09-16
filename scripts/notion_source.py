@@ -47,6 +47,26 @@ def _prop(props: dict, name: str) -> dict:
     return props.get(name, {}) or {}
 
 
+def _query_log(notion, database_id: str, sorts: list, page_size: int):
+    """notion-client 2.x / 3.x の両方でデータベースを問い合わせる。
+
+    2.x: databases.query(database_id=...)
+    3.x: databases.query は廃止。databases.retrieve でデータソースIDを取得し
+         data_sources.query(data_source_id=...) で問い合わせる。
+    """
+    databases = notion.databases
+    if hasattr(databases, "query"):
+        return databases.query(database_id=database_id, sorts=sorts, page_size=page_size)
+
+    db = databases.retrieve(database_id=database_id)
+    data_sources = db.get("data_sources") or []
+    if not data_sources:
+        raise RuntimeError("データベースにデータソースが見つかりません（DB IDを確認してください）")
+    return notion.data_sources.query(
+        data_source_id=data_sources[0]["id"], sorts=sorts, page_size=page_size
+    )
+
+
 def fetch_recent_entries(limit: int = 25) -> list[LearningEntry]:
     """学習日の新しい順に学習ログを取得する。設定が無ければ空リスト。"""
     token = os.environ.get("NOTION_API_KEY")
@@ -66,13 +86,11 @@ def fetch_recent_entries(limit: int = 25) -> list[LearningEntry]:
         print("notion-client が未インストールのため Notion 連携をスキップします。")
         return []
 
+    sorts = [{"property": "学習日", "direction": "descending"}]
+    page_size = min(limit, 100)
     try:
         notion = Client(auth=token)
-        resp = notion.databases.query(
-            database_id=database_id,
-            sorts=[{"property": "学習日", "direction": "descending"}],
-            page_size=min(limit, 100),
-        )
+        resp = _query_log(notion, database_id, sorts, page_size)
     except Exception as exc:  # 接続・権限・スキーマ差異など何が起きても止めない
         print(f"[Notion] 取得に失敗（topics.yml にフォールバック）: {exc}")
         return []
@@ -87,6 +105,9 @@ def fetch_recent_entries(limit: int = 25) -> list[LearningEntry]:
         learning_type = (_prop(props, "学習タイプ").get("select") or {}).get("name", "")
         practice = (_prop(props, "実践度").get("select") or {}).get("name", "")
 
+        # 学習日の無い行（会議の文字起こしダンプ等）は記事素材にしないので除外
+        if not date:
+            continue
         if not title and not summary:
             continue
 
