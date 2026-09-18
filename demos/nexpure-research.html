@@ -1,0 +1,492 @@
+<title>ネクスピュア事業リサーチ</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;700&family=Zen+Kaku+Gothic+New:wght@400;500;700&display=swap">
+<style>
+  :root{
+    --bg:#F6F3EC; --surface:#FFFFFF; --surface-2:#FBF9F3;
+    --ink:#221D2E; --muted:#6A6480; --faint:#928BA6;
+    --line:#E6DFD1; --line-strong:#D8CFBC;
+    --brand:#4B3F72; --brand-soft:#EDE9F5;
+    --accent:#B0813A; --accent-soft:#F3E9D6;
+    --good:#3F7D6B; --good-soft:#E1EFE9;
+    --warn:#B5642A; --warn-soft:#F6E7D8;
+    --c-a:#4B3F72; --c-b:#3F7D6B; --c-c:#B0813A; --c-d:#7A6E96;
+    --shadow:0 1px 2px rgba(34,29,46,.05), 0 12px 30px -18px rgba(34,29,46,.26);
+    --radius:14px; --maxw:940px;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#151220; --surface:#201B2D; --surface-2:#1A1626;
+      --ink:#EDE9F3; --muted:#A79FC0; --faint:#7E7699;
+      --line:#332C46; --line-strong:#463C63;
+      --brand:#A99BD6; --brand-soft:#2A2440;
+      --accent:#D8A94E; --accent-soft:#332A1B;
+      --good:#6FB79E; --good-soft:#1E2E29;
+      --warn:#DB925A; --warn-soft:#33241a;
+      --c-a:#A99BD6; --c-b:#6FB79E; --c-c:#D8A94E; --c-d:#8E82B4;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 18px 40px -22px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#151220; --surface:#201B2D; --surface-2:#1A1626;
+    --ink:#EDE9F3; --muted:#A79FC0; --faint:#7E7699;
+    --line:#332C46; --line-strong:#463C63;
+    --brand:#A99BD6; --brand-soft:#2A2440;
+    --accent:#D8A94E; --accent-soft:#332A1B;
+    --good:#6FB79E; --good-soft:#1E2E29;
+    --warn:#DB925A; --warn-soft:#33241a;
+    --c-a:#A99BD6; --c-b:#6FB79E; --c-c:#D8A94E; --c-d:#8E82B4;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 18px 40px -22px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box}
+  body{margin:0;background:var(--bg);color:var(--ink);
+    font-family:"Zen Kaku Gothic New","Hiragino Kaku Gothic ProN","Noto Sans JP",system-ui,sans-serif;
+    line-height:1.85;-webkit-font-smoothing:antialiased;font-size:15px}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding-inline:20px}
+  h1,h2,h3,h4,.serif{font-family:"Shippori Mincho","Hiragino Mincho ProN",serif}
+  .muted{color:var(--muted)} .tnum{font-variant-numeric:tabular-nums}
+  a{color:var(--brand)}
+
+  /* topbar */
+  .topbar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;
+    background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:saturate(1.4) blur(10px);
+    border-bottom:1px solid var(--line)}
+  .topbar-inner{display:flex;align-items:center;justify-content:space-between;gap:12px;padding-block:11px}
+  .brand{display:flex;align-items:center;gap:10px;min-width:0}
+  .brand .mark{width:32px;height:32px;border-radius:8px;flex:none;background:linear-gradient(145deg,var(--brand),#332a52);
+    display:grid;place-items:center;color:#fff;font-family:"Shippori Mincho",serif;font-weight:700;font-size:16px}
+  :root[data-theme="dark"] .brand .mark,:root:not([data-theme="light"]) .brand .mark{color:#17131f}
+  .brand .co{font-weight:700;font-size:13.5px;white-space:nowrap}
+  .brand .co small{display:block;font-weight:500;font-size:10.5px;color:var(--muted);letter-spacing:.14em}
+  .doc-tag{font-size:10.5px;font-weight:700;letter-spacing:.14em;color:var(--accent);border:1px solid var(--accent);
+    border-radius:999px;padding:4px 10px;white-space:nowrap}
+  .theme-btn{border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);width:34px;height:34px;
+    border-radius:8px;cursor:pointer;font-size:14px;display:grid;place-items:center}
+
+  /* cover */
+  .cover{padding-block:44px 8px}
+  .eyebrow{font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--accent);font-weight:700}
+  .cover h1{font-size:clamp(27px,5.4vw,44px);line-height:1.25;margin:14px 0 12px;text-wrap:balance;letter-spacing:.01em}
+  .cover .sub{font-size:clamp(14px,2vw,17px);color:var(--muted);max-width:52ch;margin:0}
+  .cover .metaline{display:flex;flex-wrap:wrap;gap:8px 18px;margin-top:22px;font-size:12px;color:var(--faint);
+    border-top:1px solid var(--line);padding-top:14px}
+  .cover .metaline b{color:var(--muted);font-weight:700}
+
+  /* toc */
+  .toc{margin:26px 0 8px;background:var(--surface);border:1px solid var(--line);border-radius:14px;box-shadow:var(--shadow);
+    padding:16px 20px;display:grid;grid-template-columns:1fr 1fr;gap:2px 26px}
+  @media (max-width:620px){.toc{grid-template-columns:1fr}}
+  .toc a{display:flex;gap:10px;align-items:baseline;text-decoration:none;color:var(--ink);padding:5px 0;font-size:13.5px;border-bottom:1px dotted transparent}
+  .toc a:hover{color:var(--brand)}
+  .toc a .tn{font-family:"Shippori Mincho",serif;color:var(--accent);font-size:12px;font-weight:700;flex:none;width:20px;text-align:right}
+
+  /* section */
+  section.sec{padding-block:30px 6px;scroll-margin-top:70px}
+  .sec-h{display:flex;gap:13px;align-items:baseline;border-bottom:2px solid var(--brand);padding-bottom:9px;margin-bottom:18px}
+  .sec-h .num{font-family:"Shippori Mincho",serif;font-size:15px;font-weight:700;color:#fff;background:var(--brand);
+    border-radius:7px;padding:3px 10px;flex:none}
+  :root[data-theme="dark"] .sec-h .num,:root:not([data-theme="light"]) .sec-h .num{color:#17131f}
+  .sec-h h2{margin:0;font-size:clamp(18px,3vw,23px)}
+  p{margin:0 0 13px}
+  h3{font-size:16px;margin:22px 0 8px}
+  h4{font-size:14px;margin:16px 0 6px;color:var(--brand)}
+  strong{font-weight:700}
+  mark{background:var(--accent-soft);color:var(--ink);padding:0 3px;border-radius:3px}
+
+  .lead-box{background:var(--brand-soft);border:1px solid color-mix(in srgb,var(--brand) 30%,transparent);border-radius:12px;
+    padding:15px 18px;margin:4px 0 18px}
+  .lead-box p:last-child{margin:0}
+
+  /* stat tiles */
+  .stats{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin:6px 0 8px}
+  @media (max-width:720px){.stats{grid-template-columns:repeat(2,1fr)}}
+  .stat{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:14px 15px;box-shadow:var(--shadow)}
+  .stat .v{font-family:"Shippori Mincho",serif;font-size:26px;font-weight:700;line-height:1.1;color:var(--brand);font-variant-numeric:tabular-nums}
+  .stat .v small{font-size:13px;font-weight:600}
+  .stat .k{font-size:11.5px;color:var(--muted);margin-top:6px;line-height:1.5}
+  .stat .d{font-size:10.5px;margin-top:5px;font-weight:700}
+  .up{color:var(--good)} .down{color:var(--warn)}
+
+  ul.clean,ol.clean{margin:0 0 14px;padding-left:0;list-style:none}
+  ul.clean li{position:relative;padding-left:22px;margin-bottom:7px;font-size:14px;line-height:1.7}
+  ul.clean li::before{content:"◆";position:absolute;left:2px;top:0;color:var(--accent);font-size:10px;top:4px}
+  ol.steps{counter-reset:s;margin:0 0 14px;padding:0;list-style:none}
+  ol.steps li{counter-increment:s;position:relative;padding-left:40px;margin-bottom:12px;min-height:26px}
+  ol.steps li::before{content:counter(s);position:absolute;left:0;top:0;width:26px;height:26px;border-radius:50%;
+    background:var(--brand);color:#fff;display:grid;place-items:center;font-weight:700;font-size:13px;font-family:"Shippori Mincho",serif}
+  :root[data-theme="dark"] ol.steps li::before,:root:not([data-theme="light"]) ol.steps li::before{color:#17131f}
+  ol.steps li b{display:block;font-size:14.5px}
+  ol.steps li span{font-size:13px;color:var(--muted)}
+
+  /* table */
+  .tbl-scroll{overflow-x:auto;margin:6px 0 16px;border:1px solid var(--line);border-radius:12px}
+  table{border-collapse:collapse;width:100%;font-size:13px;background:var(--surface);min-width:520px}
+  th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line);vertical-align:top;line-height:1.6}
+  thead th{background:var(--surface-2);font-weight:700;font-size:12px;color:var(--muted);white-space:nowrap;position:sticky;top:0}
+  tbody tr:last-child td{border-bottom:none}
+  td.hi{color:var(--brand);font-weight:700}
+  .pill{display:inline-block;font-size:11px;font-weight:700;border-radius:999px;padding:2px 9px;white-space:nowrap}
+  .pill.g{background:var(--good-soft);color:var(--good)} .pill.w{background:var(--warn-soft);color:var(--warn)}
+  .pill.b{background:var(--brand-soft);color:var(--brand)} .pill.n{background:var(--accent-soft);color:var(--accent)}
+
+  /* flow */
+  .flow{display:flex;gap:8px;flex-wrap:wrap;margin:8px 0 16px}
+  .flow .fstep{flex:1 1 130px;background:var(--surface);border:1px solid var(--line);border-radius:11px;padding:12px 13px;position:relative;box-shadow:var(--shadow)}
+  .flow .fstep .fn{font-size:10.5px;letter-spacing:.1em;color:var(--accent);font-weight:700}
+  .flow .fstep .ft{font-size:13px;font-weight:700;margin-top:4px;line-height:1.4}
+  .flow .fstep .fd{font-size:11.5px;color:var(--muted);margin-top:4px;line-height:1.55}
+
+  /* pain cards */
+  .pains{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0 8px}
+  @media (max-width:640px){.pains{grid-template-columns:1fr}}
+  .pain{background:var(--surface);border:1px solid var(--line);border-left:3px solid var(--warn);border-radius:11px;padding:13px 15px;box-shadow:var(--shadow)}
+  .pain h4{margin:0 0 5px;color:var(--ink);font-size:14px;display:flex;gap:8px;align-items:center}
+  .pain h4 .ic{font-size:15px}
+  .pain p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.7}
+  .pain .fix{margin-top:8px;font-size:12px;color:var(--good);background:var(--good-soft);border-radius:7px;padding:6px 9px;line-height:1.6}
+  .pain .fix b{color:var(--good)}
+
+  /* positioning map */
+  .map-wrap{background:var(--surface);border:1px solid var(--line);border-radius:14px;padding:16px;box-shadow:var(--shadow);margin:8px 0 10px}
+  .map-legend{display:flex;flex-wrap:wrap;gap:10px 16px;margin-top:10px;font-size:12px}
+  .map-legend span{display:inline-flex;align-items:center;gap:6px;color:var(--muted)}
+  .map-legend i{width:10px;height:10px;border-radius:50%;display:inline-block}
+
+  /* proposal cards */
+  .props{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:8px 0}
+  @media (max-width:640px){.props{grid-template-columns:1fr}}
+  .prop{background:var(--surface);border:1px solid var(--line);border-radius:12px;padding:15px 16px;box-shadow:var(--shadow);position:relative}
+  .prop .pn{font-family:"Shippori Mincho",serif;font-size:12px;color:var(--accent);font-weight:700;letter-spacing:.08em}
+  .prop h4{margin:6px 0 6px;color:var(--ink);font-size:15px}
+  .prop p{margin:0;font-size:12.5px;color:var(--muted);line-height:1.7}
+  .prop .tags{display:flex;flex-wrap:wrap;gap:5px;margin-top:9px}
+  .prop .tags span{font-size:10.5px;background:var(--surface-2);border:1px solid var(--line);border-radius:999px;padding:2px 8px;color:var(--faint)}
+  .prop.demo{border-color:color-mix(in srgb,var(--brand) 40%,transparent)}
+  .prop.demo .pn::after{content:" ・デモ実装済";color:var(--good)}
+
+  blockquote{margin:10px 0 16px;padding:12px 16px;border-left:3px solid var(--accent);background:var(--surface-2);border-radius:0 10px 10px 0;font-size:13.5px}
+  blockquote p{margin:0}
+
+  .note{font-size:12px;color:var(--faint);line-height:1.75}
+  hr{border:none;border-top:1px solid var(--line);margin:24px 0}
+
+  .cta{margin:34px 0 10px;border-radius:18px;overflow:hidden;border:1px solid var(--line)}
+  .cta-in{background:linear-gradient(160deg,var(--brand),#332a52);color:#fff;padding:26px 24px}
+  :root[data-theme="dark"] .cta-in,:root:not([data-theme="light"]) .cta-in{color:#F3EFFA}
+  .cta-in .eyebrow{color:#E9C97D}
+  .cta-in h2{margin:12px 0 8px;color:#fff;font-size:clamp(20px,3.2vw,26px)}
+  :root[data-theme="dark"] .cta-in h2,:root:not([data-theme="light"]) .cta-in h2{color:#F6F2FC}
+  .cta-in p{margin:0;color:#DAD2EC;font-size:13.5px;max-width:54ch}
+
+  footer{padding:20px 0 34px;color:var(--faint);font-size:11.5px;line-height:1.8}
+  footer h4{color:var(--muted);font-size:12px;margin:0 0 6px}
+  footer ol{margin:0;padding-left:18px} footer li{margin-bottom:3px;word-break:break-all}
+</style>
+
+<div class="topbar">
+  <div class="wrap topbar-inner">
+    <div class="brand">
+      <div class="mark">値</div>
+      <div class="co">ネクスピュア株式会社<small>事業リサーチ・ドシエ</small></div>
+    </div>
+    <div style="display:flex;align-items:center;gap:9px">
+      <span class="doc-tag">RESEARCH</span>
+      <button class="theme-btn" id="themeBtn" aria-label="テーマ切替">◐</button>
+    </div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="cover">
+    <div class="eyebrow">AIコンサルティング 事前調査レポート</div>
+    <h1>ネクスピュア／NexPlace<br>事業・市場・競合の全体像と、次の一手</h1>
+    <p class="sub">会員制マーケットプレイス「NexPlace」の事業構造を分解し、市場環境・競合・出店者の実務課題を整理。AI活用による成長仮説と、商談化までの道筋をまとめた提案準備用ドシエです。</p>
+    <div class="metaline">
+      <span><b>対象：</b>ネクスピュア株式会社（東京都港区・六本木ヒルズ森タワー16F）</span>
+      <span><b>作成：</b>2026年9月</span>
+      <span><b>用途：</b>営業前リサーチ／提案の土台</span>
+    </div>
+  </div>
+
+  <nav class="toc" aria-label="目次">
+    <a href="#s1"><span class="tn">01</span>エグゼクティブサマリー</a>
+    <a href="#s2"><span class="tn">02</span>事業内容と会社像</a>
+    <a href="#s3"><span class="tn">03</span>ビジネスの仕組み</a>
+    <a href="#s4"><span class="tn">04</span>他のECサイトとの違い</a>
+    <a href="#s5"><span class="tn">05</span>市場リサーチ</a>
+    <a href="#s6"><span class="tn">06</span>競合他社とポジショニング</a>
+    <a href="#s7"><span class="tn">07</span>出店手続きと出店者の困りごと</a>
+    <a href="#s8"><span class="tn">08</span>今後の予測とAI活用提案</a>
+  </nav>
+
+  <!-- 01 -->
+  <section class="sec" id="s1">
+    <div class="sec-h"><span class="num">01</span><h2>エグゼクティブサマリー</h2></div>
+    <div class="lead-box">
+      <p>ネクスピュアは、「価格競争じゃない。価値競争を。」を掲げる<strong>会員制eマーケットプレイス「NexPlace」</strong>の運営会社。一般的な安売り型ECとは逆に、<strong>消費者還元型流通</strong>——会員が購入・紹介で得たポイント（BP）を成果報酬に変える仕組み——で、メーカーと会員の双方に利益を還元する独自モデルを採る。</p>
+      <p style="margin-top:10px">構造上、成長の鍵は<mark>①出店者を増やし価値ある商品を集めること</mark>と<mark>②会員の"買う理由"と満足度を高めること</mark>の2点。どちらも「言葉づくり」「接客」「健全な運用」というAIが最も効く領域であり、AIコンサルティングの提案余地が大きい。</p>
+    </div>
+    <div class="stats">
+      <div class="stat"><div class="v">26.1<small>兆円</small></div><div class="k">日本BtoC-EC市場（2024）</div><div class="d up">▲ 前年比 +5.1%</div></div>
+      <div class="stat"><div class="v">9.78<small>%</small></div><div class="k">物販系のEC化率（2024）</div><div class="d up">▲ +0.40pt・伸びしろ大</div></div>
+      <div class="stat"><div class="v">5,680<small>億円</small></div><div class="k">ネットワークビジネス市場<br>116社合計（2024）</div><div class="d down">▼ 実質マイナス成長</div></div>
+      <div class="stat"><div class="v">5<small>営業日</small></div><div class="k">NexPlace 出店申請→発売<br>までの平均</div><div class="d">研修・年会費が前提</div></div>
+    </div>
+    <h4>3つの要点</h4>
+    <ul class="clean">
+      <li><strong>追い風と向かい風が同居</strong>：EC市場全体は拡大基調だが、モデルの土台に近い連鎖販売（MLM）市場は縮小・規制強化・担い手の高齢化が進む。「還元型流通×価値訴求」への軸足の置き方が今後を左右する。</li>
+      <li><strong>ポジションはユニーク</strong>：「価値訴求 × 会員制・紹介型」の象限は競合が薄い。ここを"健全さ"と"商品力"で押さえられるかが差別化の核。</li>
+      <li><strong>ボトルネックは"人手のかかる工程"</strong>：出店者のページ作成、会員接客、仕組みの説明、表現の法令チェック——いずれもAIで初速を上げ、質を均一化できる。</li>
+    </ul>
+  </section>
+
+  <!-- 02 -->
+  <section class="sec" id="s2">
+    <div class="sec-h"><span class="num">02</span><h2>事業内容と会社像</h2></div>
+    <p>ネクスピュア株式会社は、独自の会員制eマーケットプレイス<strong>「NexPlace（ネクスプレイス）」</strong>を企画・運営する企業。「従来の流通と次世代の流通の利点を融合し、消費者と生産者がともに満足できる新しい流通」を掲げ、<strong>安さではなく"価値"で選ばれる場</strong>を目指す。</p>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>項目</th><th>内容</th></tr></thead>
+        <tbody>
+          <tr><td class="hi">社名</td><td>ネクスピュア株式会社（NEXPURE）</td></tr>
+          <tr><td class="hi">所在地</td><td>東京都港区六本木6-10-1 六本木ヒルズ森タワー16F</td></tr>
+          <tr><td class="hi">主力事業</td><td>会員制eマーケットプレイス「NexPlace」の運営</td></tr>
+          <tr><td class="hi">コンセプト</td><td>「価格競争じゃない。価値競争を。」＝消費者還元型流通</td></tr>
+          <tr><td class="hi">登場人物</td><td>①<b>会員</b>（購入・紹介でBP/コミッションを得る）②<b>出店者＝メーカー/販売店</b>（プレミアム会員として出店）③<b>運営</b>（ネクスピュア）</td></tr>
+          <tr><td class="hi">提供価値</td><td>会員＝お得な購入＋成果報酬の機会／出店者＝価格を叩かれず価値で売れる販路</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="note">※ 会社概要・所在地は公開情報（公式サイト、gBizINFO 等）に基づく。資本金・設立・従業員数などの詳細は商談前に登記・企業DBで最終確認を推奨。</p>
+  </section>
+
+  <!-- 03 -->
+  <section class="sec" id="s3">
+    <div class="sec-h"><span class="num">03</span><h2>ビジネスの仕組み</h2></div>
+    <p>NexPlaceの核は<strong>「消費者還元型流通」</strong>。商品はメーカー希望小売価格帯で売りつつ、その中に会員へ還元するための<strong>BP（ボーナスポイント）</strong>を組み込む。値引きで安くするのではなく、"紹介・購買という貢献"に対して後から還元する設計だ。</p>
+
+    <h3>お金と価値の流れ</h3>
+    <div class="flow">
+      <div class="fstep"><div class="fn">PRICE</div><div class="ft">上代の構成</div><div class="fd">上代 ＝ 下代（原価）＋ BP ＋ 運営費。会員は上代＋送料を支払う。</div></div>
+      <div class="fstep"><div class="fn">POINT</div><div class="ft">BPが貯まる</div><div class="fd">購入や紹介でBPが付与。<b>1BP＝100円換算</b>で価値を持つ。</div></div>
+      <div class="fstep"><div class="fn">QUALIFY</div><div class="ft">条件を満たす</div><div class="fd">コミッション希望者は<b>1ポジション毎に月50BP以上</b>を達成すると権利発生。</div></div>
+      <div class="fstep"><div class="fn">PAYOUT</div><div class="ft">成果報酬</div><div class="fd">前月分を翌月末に振込。合計<b>5,000円以上で支払い</b>、未満は繰越。</div></div>
+    </div>
+
+    <h3>2つの立場での旨味</h3>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>立場</th><th>得られるもの</th><th>負担・条件</th></tr></thead>
+        <tbody>
+          <tr><td class="hi">会員（消費者）</td><td>価値ある商品の購入。紹介活動でコミッション（成果報酬）を得る機会。実質お得な買い物。</td><td>上代（下代＋BP＋運営費）＋送料を負担。報酬は達成条件つき。</td></tr>
+          <tr><td class="hi">出店者（メーカー/販売店）</td><td>価格を叩かれない販路。会員ネットワーク経由の販売。商品情報を厚く掲載できる。</td><td>プレミアム会員＋年間出店料。在庫・決済・配送は自社対応。研修必須。</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <blockquote><p><strong>構造の要点：</strong>「安さ」ではなく「紹介・還元」で回るため、<mark>商品の"価値の伝わり方"と会員コミュニティの活性度</mark>がそのまま売上を左右する。ここがAIの効きどころ。</p></blockquote>
+    <p class="note">※ 会員が紹介を通じて報酬を得る構造は、特定商取引法上の<strong>連鎖販売取引（ネットワークビジネス）</strong>の性質を含みうる。概要書面の交付、クーリングオフ（20日間）、誇大広告・不実告知の禁止など法令順守が事業継続の前提となる（→ §8で対応策を提案）。</p>
+  </section>
+
+  <!-- 04 -->
+  <section class="sec" id="s4">
+    <div class="sec-h"><span class="num">04</span><h2>他のECサイトとの違い</h2></div>
+    <p>総合モールやネットショップ基盤との最大の違いは、<strong>「誰が売り、なぜ買われるか」の設計思想</strong>にある。一般ECが"検索と価格"で買われるのに対し、NexPlaceは"人（会員）と価値"で買われる。</p>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>観点</th><th>総合モール<br>(楽天/Amazon)</th><th>ネットショップ基盤<br>(BASE/Shopify)</th><th>価値訴求EC<br>(食べチョク等)</th><th>NexPlace</th></tr></thead>
+        <tbody>
+          <tr><td class="hi">売られ方</td><td>検索・比較・価格</td><td>各店の自力集客</td><td>ストーリー・産直</td><td class="hi">会員の紹介・還元</td></tr>
+          <tr><td class="hi">価格圧力</td><td><span class="pill w">強い（値下げ競争）</span></td><td>中</td><td><span class="pill g">弱い</span></td><td><span class="pill g">弱い（価値競争）</span></td></tr>
+          <tr><td class="hi">集客の担い手</td><td>プラットフォーム</td><td>出店者自身</td><td>PF＋生産者</td><td class="hi">会員コミュニティ</td></tr>
+          <tr><td class="hi">消費者の動機</td><td>安さ・早さ・品揃え</td><td>ブランド共感</td><td>作り手支援・安心</td><td class="hi">お得＋報酬＋共感</td></tr>
+          <tr><td class="hi">出店ハードル</td><td>手数料中心</td><td><span class="pill g">低い（無料〜）</span></td><td>審査あり</td><td><span class="pill w">会員＋年会費＋研修</span></td></tr>
+          <tr><td class="hi">規制論点</td><td>景表法等</td><td>景表法等</td><td>景表法等</td><td class="hi">＋特商法(連鎖販売)</td></tr>
+        </tbody>
+      </table>
+    </div>
+    <p><strong>要するに</strong>——NexPlaceは「価格を下げずに、人の紹介で売る」EC。だからこそ<mark>商品の価値を言葉にする力</mark>と<mark>会員体験・信頼の設計</mark>が、他ECより一段重要になる。</p>
+  </section>
+
+  <!-- 05 -->
+  <section class="sec" id="s5">
+    <div class="sec-h"><span class="num">05</span><h2>市場リサーチ</h2></div>
+
+    <h3>① EC市場：土台は拡大、伸びしろも大きい</h3>
+    <p>日本のBtoC-EC市場は<strong>26.1兆円（2024年・前年比+5.1%）</strong>。うち物販系は15.2兆円で、<strong>EC化率は9.78%</strong>にとどまる。裏を返せば、物販の約9割はまだEC化しておらず、<mark>"新しい買い方"を提案するプレイヤーの余地は大きい</mark>。</p>
+
+    <h3>② ネットワークビジネス市場：縮小と再編の局面</h3>
+    <p>一方、NexPlaceのモデルに近い連鎖販売（MLM）市場は、<strong>116社合計5,680億円（2024）で実質マイナス成長</strong>。首位のアムウェイも減収し、業界は縮小・二極化が進む。ただし東京トルマリン（前期比+50%）のように、<strong>教育・有資格制度・専門性で伸びる中小</strong>も存在する。</p>
+    <blockquote><p><strong>示唆：</strong>「勧誘力」で伸ばす時代から、<mark>「商品力・体験・信頼・コンプライアンス」で選ばれる時代</mark>へ。ネクスピュアの"価値競争"という旗印は、この潮流と方向が一致している。伸ばせるかは実装次第。</p></blockquote>
+
+    <h3>③ 消費トレンド：価格より"意味"、そして継続</h3>
+    <ul class="clean">
+      <li><strong>作り手支援・産直の伸長</strong>：食べチョク等、「安さで勝負しない」ECが利用率を伸ばし、価値訴求型の需要を実証。</li>
+      <li><strong>D2C/サブスクのLTV重視</strong>：一度きりでなく、継続関係（会員・定期）で稼ぐ設計が主流に。会員制のNexPlaceと親和的。</li>
+      <li><strong>信頼とレビューの重み</strong>：紹介・口コミで買う時代ほど、誇大表現の排除と透明性が"買う理由"になる。</li>
+    </ul>
+  </section>
+
+  <!-- 06 -->
+  <section class="sec" id="s6">
+    <div class="sec-h"><span class="num">06</span><h2>競合他社とポジショニング</h2></div>
+    <p>NexPlaceの競合は単一業態ではなく、<strong>「価格軸」と「販売構造」の2軸</strong>で捉えると位置づけが明確になる。</p>
+
+    <div class="map-wrap">
+      <svg viewBox="0 0 600 420" width="100%" role="img" aria-label="価格軸×販売構造のポジショニングマップ。NexPlaceは価値訴求かつ会員制・紹介型の象限に単独で位置する。">
+        <!-- axes -->
+        <line x1="60" y1="210" x2="560" y2="210" stroke="var(--line-strong)" stroke-width="1.5"/>
+        <line x1="310" y1="30" x2="310" y2="390" stroke="var(--line-strong)" stroke-width="1.5"/>
+        <!-- axis labels -->
+        <text x="66" y="200" font-size="12" fill="var(--muted)">◀ 安さ・価格で売る</text>
+        <text x="554" y="200" font-size="12" fill="var(--muted)" text-anchor="end">価値・ストーリーで売る ▶</text>
+        <text x="318" y="44" font-size="12" fill="var(--muted)">▲ 会員制・紹介型</text>
+        <text x="318" y="384" font-size="12" fill="var(--muted)">▼ オープン・万人向け</text>
+        <!-- dots: cx,cy -->
+        <!-- Amazon/楽天: 安さ・オープン -->
+        <circle cx="150" cy="320" r="9" fill="var(--c-a)"/>
+        <text x="150" y="345" font-size="12" fill="var(--ink)" text-anchor="middle" font-weight="700">楽天/Amazon</text>
+        <!-- BASE/Shopify: 中間・オープン -->
+        <circle cx="300" cy="330" r="9" fill="var(--c-d)"/>
+        <text x="300" y="355" font-size="12" fill="var(--ink)" text-anchor="middle" font-weight="700">BASE/Shopify</text>
+        <!-- 食べチョク: 価値・オープン -->
+        <circle cx="450" cy="315" r="9" fill="var(--c-b)"/>
+        <text x="452" y="340" font-size="12" fill="var(--ink)" text-anchor="middle" font-weight="700">食べチョク/ポケマル</text>
+        <!-- MLM各社: 中間〜価値・会員制 -->
+        <circle cx="360" cy="120" r="9" fill="var(--c-c)"/>
+        <text x="360" y="105" font-size="12" fill="var(--ink)" text-anchor="middle" font-weight="700">既存MLM各社</text>
+        <!-- NexPlace: 価値・会員制（強調） -->
+        <circle cx="470" cy="130" r="15" fill="var(--brand)" stroke="var(--accent)" stroke-width="3"/>
+        <text x="470" y="163" font-size="13" fill="var(--brand)" text-anchor="middle" font-weight="700">NexPlace</text>
+        <text x="470" y="100" font-size="10.5" fill="var(--accent)" text-anchor="middle" font-weight="700">狙う象限</text>
+      </svg>
+      <div class="map-legend">
+        <span><i style="background:var(--c-a)"></i>総合モール</span>
+        <span><i style="background:var(--c-d)"></i>ネットショップ基盤</span>
+        <span><i style="background:var(--c-b)"></i>価値訴求・産直EC</span>
+        <span><i style="background:var(--c-c)"></i>既存ネットワークビジネス</span>
+        <span><i style="background:var(--brand)"></i>NexPlace</span>
+      </div>
+    </div>
+    <p><strong>読み取り：</strong>右上の<mark>「価値訴求 × 会員制・紹介型」</mark>は競合が薄い空白地帯。既存MLMは"会員制"だが商品・体験より勧誘に寄りがち、価値訴求ECは"価値"は強いが会員・還元の仕組みが弱い。NexPlaceは両方を取りにいける独自ポジションにある——<strong>ただし「勧誘型MLM」と誤認されると価値訴求ECの信頼を得られない</strong>のがリスク。ここを健全性で払拭できるかが勝負。</p>
+
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>競合タイプ</th><th>代表例</th><th>強み</th><th>NexPlaceとの差別化ポイント</th></tr></thead>
+        <tbody>
+          <tr><td class="hi">総合モール</td><td>楽天・Amazon・Yahoo!</td><td>圧倒的集客・物流</td><td>価格競争に巻き込まれない"価値"と会員還元</td></tr>
+          <tr><td class="hi">ネットショップ基盤</td><td>BASE・STORES・Shopify</td><td>低コストで開設自由</td><td>集客を会員ネットワークが肩代わり</td></tr>
+          <tr><td class="hi">価値訴求・産直EC</td><td>食べチョク・ポケマル</td><td>作り手支援の共感</td><td>紹介による成果報酬＝会員に"稼ぐ理由"</td></tr>
+          <tr><td class="hi">既存MLM</td><td>アムウェイ・ノエビア等</td><td>報酬設計・組織</td><td>多様な出店者による"商品の幅"と価値訴求</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section class="sec" id="s7">
+    <div class="sec-h"><span class="num">07</span><h2>出店手続きと、出店者の困りごと</h2></div>
+
+    <h3>出店までの流れ</h3>
+    <div class="flow">
+      <div class="fstep"><div class="fn">STEP 1</div><div class="ft">プレミアム会員になる</div><div class="fd">未会員は出店不可。まず会員登録が前提。</div></div>
+      <div class="fstep"><div class="fn">STEP 2</div><div class="ft">出店申請フォーム</div><div class="fd">申請＋必要書類の提出。</div></div>
+      <div class="fstep"><div class="fn">STEP 3</div><div class="ft">出店料の支払い</div><div class="fd">年間の出店料（品目数で変動）を納付。</div></div>
+      <div class="fstep"><div class="fn">STEP 4</div><div class="ft">出店研修（必須）</div><div class="fd">ルール・掲載方法の研修を受講。</div></div>
+      <div class="fstep"><div class="fn">STEP 5</div><div class="ft">発売開始</div><div class="fd">申請から平均5営業日で掲載スタート。</div></div>
+    </div>
+    <div class="tbl-scroll">
+      <table>
+        <thead><tr><th>出店料（年間・税込）</th><th>金額</th></tr></thead>
+        <tbody>
+          <tr><td>〜10品目</td><td class="hi tnum">55,000円</td></tr>
+          <tr><td>〜30品目</td><td class="hi tnum">110,000円</td></tr>
+          <tr><td>追加20品目ごと</td><td class="hi tnum">+55,000円</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <h3>手続き・運用で出店者が"詰まる"ポイント</h3>
+    <p class="note" style="margin-bottom:10px">※ 公開情報＋一般的なマーケットプレイス運用の知見からの分析。商談時のヒアリングで検証すべき仮説として提示。</p>
+    <div class="pains">
+      <div class="pain"><h4><span class="ic">💴</span>初期ハードルが高い</h4><p>会員登録＋年会費55,000円〜＋研修が発売前に必要。「まず試したい」層には重く、出店の意思決定が鈍る。</p><div class="fix"><b>AI提案：</b>ROIシミュレーターと"最短で回収"の道筋提示で不安を下げる</div></div>
+      <div class="pain"><h4><span class="ic">✍️</span>商品ページの言語化が大変</h4><p>"価値で売る"ほど、こだわり・背景・差別化を文章化する負担が大きい。書けずに掲載が止まる／質がばらつく。</p><div class="fix"><b>AI提案：</b>価値訴求コピー生成AI（<span style="color:var(--brand)">デモ①で実装済</span>）</div></div>
+      <div class="pain"><h4><span class="ic">🧮</span>価格設計が難しい</h4><p>上代＝下代＋BP＋運営費。BPをいくら乗せれば売れて・報酬も回るのか、最適点が見えにくい。</p><div class="fix"><b>AI提案：</b>BP/価格の感度シミュレーション支援</div></div>
+      <div class="pain"><h4><span class="ic">📦</span>在庫・決済・配送は自前</h4><p>受注後のオペレーションを出店者が負う。小規模メーカーほど運用が回らずクレーム化しやすい。</p><div class="fix"><b>AI提案：</b>問い合わせ一次対応・出荷リマインドの自動化</div></div>
+      <div class="pain"><h4><span class="ic">📣</span>集客が会員頼み</h4><p>新規出店者は紹介ネットワークが弱く、初速の売上が読めない。露出の当たり外れが大きい。</p><div class="fix"><b>AI提案：</b>会員コンシェルジュからの最適レコメンド送客（デモ②）</div></div>
+      <div class="pain"><h4><span class="ic">⚖️</span>法令表現のリスク</h4><p>薬機法・景表法・特商法に触れる表現を、出店者が気づかず書いてしまう。運営の審査負荷も重い。</p><div class="fix"><b>AI提案：</b>掲載文のコンプラAIチェッカーで自動検知</div></div>
+    </div>
+  </section>
+
+  <!-- 08 -->
+  <section class="sec" id="s8">
+    <div class="sec-h"><span class="num">08</span><h2>今後の予測と、AI活用提案</h2></div>
+
+    <h3>今後の予測（3〜5年）</h3>
+    <ul class="clean">
+      <li><strong>"勧誘"から"商品力・信頼"への転換が生死を分ける</strong>：MLM市場の縮小と規制強化が続く中、価値訴求と健全性で選ばれる設計に振り切れた事業者が生き残る。ネクスピュアの旗印は追い風。</li>
+      <li><strong>会員獲得は頭打ちしやすい</strong>：紹介依存の成長は必ず鈍化する。既存会員のLTV（継続購入・満足度）を上げる方向へ投資の重心が移る。</li>
+      <li><strong>コンプライアンスが競争優位に</strong>：透明で健全な運用そのものが、他MLMと差別化しブランド価値になる時代へ。</li>
+      <li><strong>データ活用が次の武器</strong>：会員の購買・紹介データを、レコメンドと需要予測、出店者支援に還元できるかで差がつく。</li>
+    </ul>
+
+    <h3>AIコンサルとしての提案（優先度順）</h3>
+    <div class="props">
+      <div class="prop demo"><div class="pn">提案 01</div><h4>出店者オンボーディングAI</h4><p>商品情報から価値訴求コピー・説明文・ストーリーを自動生成。出店の初速と掲載品質を底上げし、GMVへ直結。</p><div class="tags"><span>出店者支援</span><span>GMV↑</span><span>実装容易</span></div></div>
+      <div class="prop demo"><div class="pn">提案 02</div><h4>会員AIコンシェルジュ</h4><p>好み・悩みをヒアリングして商品へ送客。仕組みFAQに即答し、離脱防止とサポート工数削減を同時実現。</p><div class="tags"><span>会員体験</span><span>継続率↑</span><span>工数↓</span></div></div>
+      <div class="prop"><div class="pn">提案 03</div><h4>コンプラAIチェッカー</h4><p>掲載文を薬機法・景表法・特商法の観点で自動チェック。運営の審査負荷を下げ、"健全なMLM"というブランドを守る。</p><div class="tags"><span>リスク低減</span><span>審査自動化</span><span>差別化</span></div></div>
+      <div class="prop"><div class="pn">提案 04</div><h4>パーソナライズ・レコメンド／需要予測</h4><p>会員データから"次に響く商品"を提案、出店者には売れ筋・在庫の予測を還元。プラットフォーム全体の回転を上げる。</p><div class="tags"><span>データ活用</span><span>LTV↑</span><span>中期</span></div></div>
+    </div>
+    <p class="note">※ 提案01・02は<strong>すでに動くデモを実装済み</strong>（別紙「NexPlace AIスタジオ」）。商談ではまず"その場で動くAI"を見せ、体験から入るのが有効。</p>
+
+    <hr>
+    <h3>営業トスまでの流れ</h3>
+    <ol class="steps">
+      <li><b>興味付け：デモ体験</b><span>「NexPlace AIスタジオ」で、価値訴求コピー生成と会員コンシェルジュをその場で触ってもらう。</span></li>
+      <li><b>課題の可視化：本リサーチ</b><span>本ドシエで、出店者の困りごと・市場の潮流・競合ポジションを共有し「なぜ今AIか」を合意。</span></li>
+      <li><b>小さく試す：PoC提案</b><span>実データを使った小規模PoC（例：出店者コピー生成の効果検証）で、数字で効果を確認。</span></li>
+      <li><b>段階導入へトス</b><span>効果の出た機能から順に既存NexPlaceへ組み込む——具体的な体制・費用は営業担当へ引き継ぐ。</span></li>
+    </ol>
+  </section>
+
+  <div class="cta">
+    <div class="cta-in">
+      <div class="eyebrow">Hand-off</div>
+      <h2>「価値競争」を、AIで実装する。</h2>
+      <p>ネクスピュアの思想は時代と合致している。あとは、価値を"伝える力"と"守る仕組み"をどう実装するか。まずはデモ体験と30分のヒアリングから、御社の業務に当てはめた導入イメージをご提案します。</p>
+    </div>
+  </div>
+
+  <footer>
+    <h4>出典・参照（2026年9月時点）</h4>
+    <ol>
+      <li>ネクスピュア株式会社 公式サイト／出店案内・FAQ・BP説明ページ（nexpure.co.jp, nexplace.nexpure.co.jp）</li>
+      <li>経済産業省「令和6年度 電子商取引に関する市場調査」（2025年8月26日公表）</li>
+      <li>日本流通産業新聞オンライン「2024年 ネットワークビジネス売上高ランキング」（116社合計5,680億円）</li>
+      <li>消費者庁 特定商取引法ガイド「連鎖販売取引」</li>
+      <li>commercepick 他「産直EC 食べチョク／食品D2C」関連記事、gBizINFO 企業情報</li>
+    </ol>
+    <p style="margin-top:10px" class="note">本レポートはAIコンサルティングの提案準備資料です。金額・数値・仕組みの記述は公開情報に基づく整理であり、出店料・報酬条件・会社概要等は変更されている可能性があります。商談・提案の前に必ず一次情報および先方ヒアリングで最新の事実確認を行ってください。「出店者の困りごと」は公開情報からの分析仮説を含みます。</p>
+  </footer>
+</main>
+
+<script>
+(function(){
+  const root=document.documentElement, btn=document.getElementById('themeBtn');
+  let saved=null; try{saved=localStorage.getItem('nx-theme')}catch(e){}
+  if(saved) root.setAttribute('data-theme',saved);
+  btn.addEventListener('click',()=>{
+    const cur=root.getAttribute('data-theme');
+    const isDark=cur?cur==='dark':matchMedia('(prefers-color-scheme: dark)').matches;
+    const next=isDark?'light':'dark';
+    root.setAttribute('data-theme',next);
+    try{localStorage.setItem('nx-theme',next)}catch(e){}
+  });
+})();
+document.querySelectorAll('.toc a').forEach(a=>a.addEventListener('click',e=>{
+  const el=document.querySelector(a.getAttribute('href'));
+  if(el){e.preventDefault();el.scrollIntoView({behavior:'smooth',block:'start'});}
+}));
+</script>
