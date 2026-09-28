@@ -1,0 +1,1095 @@
+{
+ "_note": "デモ用の架空ストア。実在の店舗・顧客データは入れないこと。金額は税込・円。",
+ "shop": "サンプルサウナ用品店",
+ "currency": "JPY",
+ "products": [
+  {
+   "id": "gid://shopify/Product/1",
+   "title": "サウナハット（フェルト）",
+   "status": "ACTIVE",
+   "description_html": "<p>ウール100%のフェルト生地で、高温のサウナ室でも頭と髪を熱から守ります。洗濯機で手洗いモードの洗濯が可能。フリーサイズ（頭囲58cm前後）。</p>",
+   "variants": [
+    {
+     "id": "gid://shopify/ProductVariant/11",
+     "title": "グレー",
+     "sku": "HAT-GY",
+     "price": 3980,
+     "inventory": 14
+    },
+    {
+     "id": "gid://shopify/ProductVariant/12",
+     "title": "ネイビー",
+     "sku": "HAT-NV",
+     "price": 3980,
+     "inventory": 9
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/2",
+   "title": "サウナマット",
+   "status": "ACTIVE",
+   "description_html": "<p>携帯用のサウナマット。</p>",
+   "variants": [
+    {
+     "id": "gid://shopify/ProductVariant/21",
+     "title": "デフォルト",
+     "sku": "MAT-01",
+     "price": 2480,
+     "inventory": 40
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/3",
+   "title": "ロウリュ用アロマ（白樺）",
+   "status": "ACTIVE",
+   "description_html": "<p>フィンランド産の白樺の香り。100ml。</p>",
+   "variants": [
+    {
+     "id": "gid://shopify/ProductVariant/31",
+     "title": "デフォルト",
+     "sku": "AROMA-BIR",
+     "price": 1980,
+     "inventory": 3
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/4",
+   "title": "ロウリュ用アロマ（ユーカリ）",
+   "status": "ACTIVE",
+   "description_html": "<p>すっきりとしたユーカリの香りで、ロウリュの蒸気と一緒に深呼吸したくなるアロマウォーター。水で50倍に薄めて使います。100ml。</p>",
+   "variants": [
+    {
+     "id": "gid://shopify/ProductVariant/41",
+     "title": "デフォルト",
+     "sku": "AROMA-EUC",
+     "price": 1980,
+     "inventory": 22
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/5",
+   "title": "サウナタオル（今治）",
+   "status": "ACTIVE",
+   "description_html": "<p>今治産の薄手タオル。吸水性が高く、サウナ室でも乾きやすい。</p>",
+   "variants": [
+    {
+     "id": "gid://shopify/ProductVariant/51",
+     "title": "白",
+     "sku": "TWL-WH",
+     "price": 2980,
+     "inventory": 18
+    },
+    {
+     "id": "gid://shopify/ProductVariant/52",
+     "title": "黒",
+     "sku": "TWL-BK",
+     "price": 2980,
+     "inventory": 4
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/6",
+   "title": "サウナ用温度計",
+   "status": "ACTIVE",
+   "description_html": "<p>木枠のアナログ温度計。0〜150℃。自宅サウナやテントサウナに。壁掛け用の金具付き。</p>",
+   "variants": [
+    {
+     "id": "gid://shopify/ProductVariant/61",
+     "title": "デフォルト",
+     "sku": "TMP-01",
+     "price": 4500,
+     "inventory": 11
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/7",
+   "title": "携帯用サウナポンチョ",
+   "status": "ACTIVE",
+   "description_html": "",
+   "variants": [
+    {
+     "id": "gid://shopify/ProductVariant/71",
+     "title": "デフォルト",
+     "sku": "PONCHO-01",
+     "price": 6800,
+     "inventory": 2
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Product/8",
+   "title": "ギフトセット（ハット＋アロマ）",
+   "status": "DRAFT",
+   "description_html": "",
+   "variants": [
+    {
+     "id": "gid://shopify/ProductVariant/81",
+     "title": "デフォルト",
+     "sku": "GIFT-01",
+     "price": 9800,
+     "inventory": 5
+    }
+   ]
+  }
+ ],
+ "orders": [
+  {
+   "id": "gid://shopify/Order/1001",
+   "name": "#1001",
+   "created_at": "2026-08-01T11:34:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/11",
+     "title": "サウナハット（フェルト） - グレー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1002",
+   "name": "#1002",
+   "created_at": "2026-08-03T12:39:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/12",
+     "title": "サウナハット（フェルト） - ネイビー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1003",
+   "name": "#1003",
+   "created_at": "2026-08-03T18:24:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/11",
+     "title": "サウナハット（フェルト） - グレー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1004",
+   "name": "#1004",
+   "created_at": "2026-08-04T10:03:00+09:00",
+   "cancelled": false,
+   "total": 6960,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/5",
+     "variant_id": "gid://shopify/ProductVariant/52",
+     "title": "サウナタオル（今治） - 黒",
+     "quantity": 1,
+     "amount": 2980
+    },
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/11",
+     "title": "サウナハット（フェルト） - グレー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1005",
+   "name": "#1005",
+   "created_at": "2026-08-04T11:27:00+09:00",
+   "cancelled": false,
+   "total": 5960,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/12",
+     "title": "サウナハット（フェルト） - ネイビー",
+     "quantity": 1,
+     "amount": 3980
+    },
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 1,
+     "amount": 1980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1006",
+   "name": "#1006",
+   "created_at": "2026-08-05T10:04:00+09:00",
+   "cancelled": false,
+   "total": 11920,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/11",
+     "title": "サウナハット（フェルト） - グレー",
+     "quantity": 2,
+     "amount": 7960
+    },
+    {
+     "product_id": "gid://shopify/Product/3",
+     "variant_id": "gid://shopify/ProductVariant/31",
+     "title": "ロウリュ用アロマ（白樺）",
+     "quantity": 2,
+     "amount": 3960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1007",
+   "name": "#1007",
+   "created_at": "2026-08-05T16:44:00+09:00",
+   "cancelled": false,
+   "total": 1980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 1,
+     "amount": 1980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1008",
+   "name": "#1008",
+   "created_at": "2026-08-06T10:23:00+09:00",
+   "cancelled": false,
+   "total": 8460,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 2,
+     "amount": 3960
+    },
+    {
+     "product_id": "gid://shopify/Product/6",
+     "variant_id": "gid://shopify/ProductVariant/61",
+     "title": "サウナ用温度計",
+     "quantity": 1,
+     "amount": 4500
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1009",
+   "name": "#1009",
+   "created_at": "2026-08-07T11:48:00+09:00",
+   "cancelled": true,
+   "total": 4960,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/2",
+     "variant_id": "gid://shopify/ProductVariant/21",
+     "title": "サウナマット",
+     "quantity": 2,
+     "amount": 4960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1010",
+   "name": "#1010",
+   "created_at": "2026-08-09T18:46:00+09:00",
+   "cancelled": false,
+   "total": 5960,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/5",
+     "variant_id": "gid://shopify/ProductVariant/51",
+     "title": "サウナタオル（今治） - 白",
+     "quantity": 2,
+     "amount": 5960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1011",
+   "name": "#1011",
+   "created_at": "2026-08-09T16:47:00+09:00",
+   "cancelled": false,
+   "total": 7960,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/12",
+     "title": "サウナハット（フェルト） - ネイビー",
+     "quantity": 2,
+     "amount": 7960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1012",
+   "name": "#1012",
+   "created_at": "2026-08-12T20:02:00+09:00",
+   "cancelled": false,
+   "total": 8460,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/6",
+     "variant_id": "gid://shopify/ProductVariant/61",
+     "title": "サウナ用温度計",
+     "quantity": 1,
+     "amount": 4500
+    },
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 2,
+     "amount": 3960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1013",
+   "name": "#1013",
+   "created_at": "2026-08-13T10:59:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/11",
+     "title": "サウナハット（フェルト） - グレー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1014",
+   "name": "#1014",
+   "created_at": "2026-08-13T13:13:00+09:00",
+   "cancelled": false,
+   "total": 5960,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/5",
+     "variant_id": "gid://shopify/ProductVariant/52",
+     "title": "サウナタオル（今治） - 黒",
+     "quantity": 2,
+     "amount": 5960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1015",
+   "name": "#1015",
+   "created_at": "2026-08-14T15:51:00+09:00",
+   "cancelled": false,
+   "total": 1980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 1,
+     "amount": 1980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1016",
+   "name": "#1016",
+   "created_at": "2026-08-15T12:56:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/12",
+     "title": "サウナハット（フェルト） - ネイビー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1017",
+   "name": "#1017",
+   "created_at": "2026-08-17T19:03:00+09:00",
+   "cancelled": false,
+   "total": 1980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 1,
+     "amount": 1980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1018",
+   "name": "#1018",
+   "created_at": "2026-08-18T19:24:00+09:00",
+   "cancelled": false,
+   "total": 7940,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/5",
+     "variant_id": "gid://shopify/ProductVariant/51",
+     "title": "サウナタオル（今治） - 白",
+     "quantity": 1,
+     "amount": 2980
+    },
+    {
+     "product_id": "gid://shopify/Product/2",
+     "variant_id": "gid://shopify/ProductVariant/21",
+     "title": "サウナマット",
+     "quantity": 2,
+     "amount": 4960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1019",
+   "name": "#1019",
+   "created_at": "2026-08-19T10:46:00+09:00",
+   "cancelled": false,
+   "total": 2980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/5",
+     "variant_id": "gid://shopify/ProductVariant/52",
+     "title": "サウナタオル（今治） - 黒",
+     "quantity": 1,
+     "amount": 2980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1020",
+   "name": "#1020",
+   "created_at": "2026-08-20T11:46:00+09:00",
+   "cancelled": true,
+   "total": 2980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/5",
+     "variant_id": "gid://shopify/ProductVariant/51",
+     "title": "サウナタオル（今治） - 白",
+     "quantity": 1,
+     "amount": 2980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1021",
+   "name": "#1021",
+   "created_at": "2026-08-21T18:09:00+09:00",
+   "cancelled": false,
+   "total": 2980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/5",
+     "variant_id": "gid://shopify/ProductVariant/51",
+     "title": "サウナタオル（今治） - 白",
+     "quantity": 1,
+     "amount": 2980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1022",
+   "name": "#1022",
+   "created_at": "2026-08-22T15:25:00+09:00",
+   "cancelled": false,
+   "total": 1980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 1,
+     "amount": 1980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1023",
+   "name": "#1023",
+   "created_at": "2026-08-22T10:58:00+09:00",
+   "cancelled": false,
+   "total": 4500,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/6",
+     "variant_id": "gid://shopify/ProductVariant/61",
+     "title": "サウナ用温度計",
+     "quantity": 1,
+     "amount": 4500
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1024",
+   "name": "#1024",
+   "created_at": "2026-08-24T13:31:00+09:00",
+   "cancelled": false,
+   "total": 2480,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/2",
+     "variant_id": "gid://shopify/ProductVariant/21",
+     "title": "サウナマット",
+     "quantity": 1,
+     "amount": 2480
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1025",
+   "name": "#1025",
+   "created_at": "2026-08-25T15:10:00+09:00",
+   "cancelled": false,
+   "total": 6800,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/7",
+     "variant_id": "gid://shopify/ProductVariant/71",
+     "title": "携帯用サウナポンチョ",
+     "quantity": 1,
+     "amount": 6800
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1026",
+   "name": "#1026",
+   "created_at": "2026-08-25T10:33:00+09:00",
+   "cancelled": false,
+   "total": 1980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 1,
+     "amount": 1980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1027",
+   "name": "#1027",
+   "created_at": "2026-08-26T14:37:00+09:00",
+   "cancelled": false,
+   "total": 3960,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/3",
+     "variant_id": "gid://shopify/ProductVariant/31",
+     "title": "ロウリュ用アロマ（白樺）",
+     "quantity": 2,
+     "amount": 3960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1028",
+   "name": "#1028",
+   "created_at": "2026-08-26T17:50:00+09:00",
+   "cancelled": false,
+   "total": 2980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/5",
+     "variant_id": "gid://shopify/ProductVariant/51",
+     "title": "サウナタオル（今治） - 白",
+     "quantity": 1,
+     "amount": 2980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1029",
+   "name": "#1029",
+   "created_at": "2026-08-27T13:25:00+09:00",
+   "cancelled": false,
+   "total": 2980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/5",
+     "variant_id": "gid://shopify/ProductVariant/51",
+     "title": "サウナタオル（今治） - 白",
+     "quantity": 1,
+     "amount": 2980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1030",
+   "name": "#1030",
+   "created_at": "2026-08-28T10:22:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/12",
+     "title": "サウナハット（フェルト） - ネイビー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1031",
+   "name": "#1031",
+   "created_at": "2026-08-29T19:39:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/11",
+     "title": "サウナハット（フェルト） - グレー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1032",
+   "name": "#1032",
+   "created_at": "2026-08-31T12:24:00+09:00",
+   "cancelled": false,
+   "total": 2480,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/2",
+     "variant_id": "gid://shopify/ProductVariant/21",
+     "title": "サウナマット",
+     "quantity": 1,
+     "amount": 2480
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1033",
+   "name": "#1033",
+   "created_at": "2026-09-01T16:54:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/12",
+     "title": "サウナハット（フェルト） - ネイビー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1034",
+   "name": "#1034",
+   "created_at": "2026-09-03T19:04:00+09:00",
+   "cancelled": false,
+   "total": 4960,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/2",
+     "variant_id": "gid://shopify/ProductVariant/21",
+     "title": "サウナマット",
+     "quantity": 2,
+     "amount": 4960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1035",
+   "name": "#1035",
+   "created_at": "2026-09-04T11:39:00+09:00",
+   "cancelled": false,
+   "total": 6800,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/7",
+     "variant_id": "gid://shopify/ProductVariant/71",
+     "title": "携帯用サウナポンチョ",
+     "quantity": 1,
+     "amount": 6800
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1036",
+   "name": "#1036",
+   "created_at": "2026-09-05T12:19:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/11",
+     "title": "サウナハット（フェルト） - グレー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1037",
+   "name": "#1037",
+   "created_at": "2026-09-06T14:33:00+09:00",
+   "cancelled": false,
+   "total": 6800,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/7",
+     "variant_id": "gid://shopify/ProductVariant/71",
+     "title": "携帯用サウナポンチョ",
+     "quantity": 1,
+     "amount": 6800
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1038",
+   "name": "#1038",
+   "created_at": "2026-09-06T15:02:00+09:00",
+   "cancelled": false,
+   "total": 6800,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/7",
+     "variant_id": "gid://shopify/ProductVariant/71",
+     "title": "携帯用サウナポンチョ",
+     "quantity": 1,
+     "amount": 6800
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1039",
+   "name": "#1039",
+   "created_at": "2026-09-07T17:42:00+09:00",
+   "cancelled": false,
+   "total": 4500,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/6",
+     "variant_id": "gid://shopify/ProductVariant/61",
+     "title": "サウナ用温度計",
+     "quantity": 1,
+     "amount": 4500
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1040",
+   "name": "#1040",
+   "created_at": "2026-09-07T11:33:00+09:00",
+   "cancelled": false,
+   "total": 2480,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/2",
+     "variant_id": "gid://shopify/ProductVariant/21",
+     "title": "サウナマット",
+     "quantity": 1,
+     "amount": 2480
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1041",
+   "name": "#1041",
+   "created_at": "2026-09-08T20:38:00+09:00",
+   "cancelled": false,
+   "total": 6800,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/7",
+     "variant_id": "gid://shopify/ProductVariant/71",
+     "title": "携帯用サウナポンチョ",
+     "quantity": 1,
+     "amount": 6800
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1042",
+   "name": "#1042",
+   "created_at": "2026-09-09T13:43:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/12",
+     "title": "サウナハット（フェルト） - ネイビー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1043",
+   "name": "#1043",
+   "created_at": "2026-09-11T14:33:00+09:00",
+   "cancelled": false,
+   "total": 17560,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/7",
+     "variant_id": "gid://shopify/ProductVariant/71",
+     "title": "携帯用サウナポンチョ",
+     "quantity": 2,
+     "amount": 13600
+    },
+    {
+     "product_id": "gid://shopify/Product/3",
+     "variant_id": "gid://shopify/ProductVariant/31",
+     "title": "ロウリュ用アロマ（白樺）",
+     "quantity": 2,
+     "amount": 3960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1044",
+   "name": "#1044",
+   "created_at": "2026-09-12T20:55:00+09:00",
+   "cancelled": false,
+   "total": 5940,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 1,
+     "amount": 1980
+    },
+    {
+     "product_id": "gid://shopify/Product/3",
+     "variant_id": "gid://shopify/ProductVariant/31",
+     "title": "ロウリュ用アロマ（白樺）",
+     "quantity": 2,
+     "amount": 3960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1045",
+   "name": "#1045",
+   "created_at": "2026-09-14T16:18:00+09:00",
+   "cancelled": false,
+   "total": 1980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/3",
+     "variant_id": "gid://shopify/ProductVariant/31",
+     "title": "ロウリュ用アロマ（白樺）",
+     "quantity": 1,
+     "amount": 1980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1046",
+   "name": "#1046",
+   "created_at": "2026-09-15T19:58:00+09:00",
+   "cancelled": false,
+   "total": 2980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/5",
+     "variant_id": "gid://shopify/ProductVariant/51",
+     "title": "サウナタオル（今治） - 白",
+     "quantity": 1,
+     "amount": 2980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1047",
+   "name": "#1047",
+   "created_at": "2026-09-17T17:18:00+09:00",
+   "cancelled": false,
+   "total": 3960,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/3",
+     "variant_id": "gid://shopify/ProductVariant/31",
+     "title": "ロウリュ用アロマ（白樺）",
+     "quantity": 2,
+     "amount": 3960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1048",
+   "name": "#1048",
+   "created_at": "2026-09-18T14:47:00+09:00",
+   "cancelled": false,
+   "total": 1980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/3",
+     "variant_id": "gid://shopify/ProductVariant/31",
+     "title": "ロウリュ用アロマ（白樺）",
+     "quantity": 1,
+     "amount": 1980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1049",
+   "name": "#1049",
+   "created_at": "2026-09-20T18:27:00+09:00",
+   "cancelled": false,
+   "total": 9000,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/6",
+     "variant_id": "gid://shopify/ProductVariant/61",
+     "title": "サウナ用温度計",
+     "quantity": 2,
+     "amount": 9000
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1050",
+   "name": "#1050",
+   "created_at": "2026-09-21T14:02:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/12",
+     "title": "サウナハット（フェルト） - ネイビー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1051",
+   "name": "#1051",
+   "created_at": "2026-09-21T13:31:00+09:00",
+   "cancelled": false,
+   "total": 3980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/1",
+     "variant_id": "gid://shopify/ProductVariant/11",
+     "title": "サウナハット（フェルト） - グレー",
+     "quantity": 1,
+     "amount": 3980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1052",
+   "name": "#1052",
+   "created_at": "2026-09-22T16:12:00+09:00",
+   "cancelled": false,
+   "total": 3960,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 2,
+     "amount": 3960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1053",
+   "name": "#1053",
+   "created_at": "2026-09-24T16:15:00+09:00",
+   "cancelled": false,
+   "total": 1980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 1,
+     "amount": 1980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1054",
+   "name": "#1054",
+   "created_at": "2026-09-26T12:47:00+09:00",
+   "cancelled": true,
+   "total": 3960,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 2,
+     "amount": 3960
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1055",
+   "name": "#1055",
+   "created_at": "2026-09-26T18:26:00+09:00",
+   "cancelled": false,
+   "total": 1980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 1,
+     "amount": 1980
+    }
+   ]
+  },
+  {
+   "id": "gid://shopify/Order/1056",
+   "name": "#1056",
+   "created_at": "2026-09-27T10:52:00+09:00",
+   "cancelled": false,
+   "total": 1980,
+   "lines": [
+    {
+     "product_id": "gid://shopify/Product/4",
+     "variant_id": "gid://shopify/ProductVariant/41",
+     "title": "ロウリュ用アロマ（ユーカリ）",
+     "quantity": 1,
+     "amount": 1980
+    }
+   ]
+  }
+ ]
+}

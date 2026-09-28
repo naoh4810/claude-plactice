@@ -1,0 +1,4 @@
+# MCP サーバー（2.x の MCPServer）
+mcp>=2
+
+# Shopify への接続は標準ライブラリ（urllib）だけで行うので追加は不要
