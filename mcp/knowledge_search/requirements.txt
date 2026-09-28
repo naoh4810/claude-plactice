@@ -1,0 +1,6 @@
+# MCP サーバー（2.x の MCPServer）
+mcp>=2
+
+# 以下は任意。入れた形式だけ読めるようになる（無ければその形式は読み飛ばして一覧に理由を表示）
+pypdf          # PDF
+python-docx    # Word（.docx）
