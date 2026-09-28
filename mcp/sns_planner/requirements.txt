@@ -1,0 +1,2 @@
+# MCP サーバー（2.x の MCPServer）
+mcp>=2

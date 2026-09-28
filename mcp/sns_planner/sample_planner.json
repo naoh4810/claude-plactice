@@ -1,0 +1,24 @@
+{
+ "_note": "デモ用の架空アカウント（地域の観光案内）。実在の店舗・人物・数字は入れないこと。",
+ "account": "サンプル町 観光案内",
+ "weekly_targets": {"instagram": 2, "x": 3, "threads": 1, "tiktok": 1},
+ "ideas": [
+  {"id": "idea-1", "title": "朝の商店街さんぽ", "notes": "7時台の商店街。パン屋の開店と、店主さんのあいさつ", "tags": ["まち歩き"], "created": "2026-09-12"},
+  {"id": "idea-2", "title": "老舗の和菓子屋さん紹介", "notes": "創業80年。秋限定の栗まんじゅう（1個220円）", "tags": ["お店紹介", "秋"], "created": "2026-09-13"},
+  {"id": "idea-3", "title": "秋の紅葉スポット3選", "notes": "見頃は11月中旬。駐車場あり2か所、駅から徒歩1か所", "tags": ["季節", "秋"], "created": "2026-09-16"},
+  {"id": "idea-4", "title": "ふるさと納税のクーポンで町を回るモデルコース", "notes": "半日コース。和菓子屋→古民家カフェ→温泉", "tags": ["旅のしかた"], "created": "2026-09-20"},
+  {"id": "idea-5", "title": "週末の朝市のお知らせ", "notes": "10/4（土）8〜11時、駅前広場。地元野菜と焼き菓子", "tags": ["イベント"], "created": "2026-09-25"}
+ ],
+ "posts": [
+  {"id": "post-1", "idea_id": "idea-1", "platform": "instagram", "text": "朝7時の商店街さんぽ。パン屋さんの開店と一緒に、町がゆっくり目を覚まします。\n#サンプル町 #朝さんぽ #商店街", "media": "朝の商店街の写真4枚", "status": "posted", "scheduled_at": "2026-09-15T19:00:00", "posted_at": "2026-09-15T19:00:00", "url": null, "metrics": {"impressions": 820, "likes": 64, "comments": 3, "shares": 5, "saves": 22}},
+  {"id": "post-2", "idea_id": "idea-1", "platform": "x", "text": "朝7時の商店街。焼きたてのパンの香りがします。 #サンプル町", "media": "写真1枚", "status": "posted", "scheduled_at": "2026-09-15T12:10:00", "posted_at": "2026-09-15T12:10:00", "url": null, "metrics": {"impressions": 1450, "likes": 18, "comments": 1, "shares": 6, "clicks": 25}},
+  {"id": "post-3", "idea_id": "idea-2", "platform": "instagram", "text": "創業80年の和菓子屋さん。秋限定の栗まんじゅうは1個220円。\n#サンプル町 #和菓子 #秋限定", "media": "店先と栗まんじゅうの写真", "status": "posted", "scheduled_at": "2026-09-18T19:00:00", "posted_at": "2026-09-18T19:00:00", "url": null, "metrics": {"impressions": 610, "likes": 41, "comments": 1, "shares": 2, "saves": 9}},
+  {"id": "post-4", "idea_id": "idea-2", "platform": "threads", "text": "創業80年の和菓子屋さんで、秋限定の栗まんじゅうを買いました。ほくほく。 #和菓子", "media": "", "status": "posted", "scheduled_at": "2026-09-18T20:00:00", "posted_at": "2026-09-18T20:00:00", "url": null, "metrics": {"impressions": 300, "likes": 12, "comments": 2, "shares": 1}},
+  {"id": "post-5", "idea_id": "idea-3", "platform": "x", "text": "サンプル町の紅葉スポット3選。見頃は11月中旬です。駐車場のある2か所と、駅から歩ける1か所をまとめました。 #紅葉 #サンプル町", "media": "写真3枚", "status": "posted", "scheduled_at": "2026-09-21T08:30:00", "posted_at": "2026-09-21T08:30:00", "url": null, "metrics": {"impressions": 2300, "likes": 40, "comments": 4, "shares": 15, "clicks": 60}},
+  {"id": "post-6", "idea_id": "idea-3", "platform": "instagram", "text": "保存して秋のおでかけに。サンプル町の紅葉スポット3選（見頃は11月中旬）。\n#サンプル町 #紅葉 #秋のおでかけ", "media": "カルーセル5枚", "status": "posted", "scheduled_at": "2026-09-22T19:00:00", "posted_at": "2026-09-22T19:00:00", "url": null, "metrics": {"impressions": 1300, "likes": 120, "comments": 8, "shares": 14, "saves": 45}},
+  {"id": "post-7", "idea_id": "idea-4", "platform": "x", "text": "ふるさと納税のクーポンで回る、サンプル町の半日モデルコース。和菓子屋→古民家カフェ→温泉。", "media": "", "status": "posted", "scheduled_at": "2026-09-24T12:00:00", "posted_at": "2026-09-24T12:00:00", "url": null, "metrics": {"impressions": 900, "likes": 9, "comments": 0, "shares": 2, "clicks": 8}},
+  {"id": "post-8", "idea_id": "idea-4", "platform": "tiktok", "text": "クーポンだけで半日まわってみた #サンプル町 #ふるさと納税 #旅vlog", "media": "縦動画45秒", "status": "posted", "scheduled_at": "2026-09-27T18:00:00", "posted_at": "2026-09-27T18:00:00", "url": null, "metrics": {"impressions": 4200, "likes": 210, "comments": 12, "shares": 30, "saves": 40}},
+  {"id": "post-9", "idea_id": "idea-5", "platform": "instagram", "text": "10/4（土）8〜11時は駅前広場で朝市。地元の野菜と焼き菓子が並びます。\n#サンプル町 #朝市", "media": "", "status": "draft", "scheduled_at": null, "posted_at": null, "url": null, "metrics": {}},
+  {"id": "post-10", "idea_id": "idea-5", "platform": "x", "text": "10/4（土）8〜11時、駅前広場で朝市を開きます。地元の野菜と焼き菓子をどうぞ。 #サンプル町", "media": "", "status": "scheduled", "scheduled_at": "2026-09-29T12:00:00", "posted_at": null, "url": null, "metrics": {}}
+ ]
+}
