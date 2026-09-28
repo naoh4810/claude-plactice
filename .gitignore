@@ -1,5 +1,7 @@
 # 秘密情報
 .env
+service-account*.json
+*credentials*.json
 
 # Python
 __pycache__/

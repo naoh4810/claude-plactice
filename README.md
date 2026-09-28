@@ -76,6 +76,7 @@ python scripts/generate_article.py
 ├─ prompts/system_prompt.md             記事のペルソナ・構成・文体
 ├─ config/topics.yml                    生成設定＋フォールバックのトピック
 ├─ articles/                            生成された記事（下書き）
+├─ mcp/                                 MCP デモ集（営業シートMCP など。mcp/README.md 参照）
 ├─ state/used.json                      記事化済みトピックの記録
 └─ docs/学習ロードマップ.md             記事化しやすい今後の学習テーマ
 ```

@@ -1,0 +1,5 @@
+# MCP サーバー（FastMCP）
+mcp
+
+# Google スプレッドシート接続（本番モードのみ。サンプルモードでは不要）
+gspread
