@@ -1,5 +1,5 @@
-# MCP サーバー（FastMCP）
-mcp
+# MCP サーバー（2.x の MCPServer。1.x の FastMCP とは import 先が違う）
+mcp>=2
 
 # Google スプレッドシート接続（本番モードのみ。サンプルモードでは不要）
 gspread

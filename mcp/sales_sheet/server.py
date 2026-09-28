@@ -17,11 +17,11 @@ from __future__ import annotations
 
 from collections import Counter, defaultdict
 
-from mcp.server.fastmcp import FastMCP
+from mcp.server.mcpserver import MCPServer
 
 from store import NAME_COL, BaseStore, Contact, SampleStore, open_store
 
-mcp = FastMCP("sales-sheet")
+mcp = MCPServer("sales-sheet")
 store: BaseStore = open_store()
 
 CLOSED = {"否決", "NG", "失注"}
