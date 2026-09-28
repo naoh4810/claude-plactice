@@ -3,6 +3,9 @@
 service-account*.json
 *credentials*.json
 
+# MCP デモの出力（個人情報を含みうる）
+reports/
+
 # Python
 __pycache__/
 *.pyc

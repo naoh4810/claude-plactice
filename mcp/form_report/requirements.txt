@@ -1,0 +1,5 @@
+# MCP サーバー（2.x の MCPServer）
+mcp>=2
+
+# Google スプレッドシート接続（本番モードのみ。サンプルモードでは不要）
+gspread
