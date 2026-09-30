@@ -1,0 +1,14 @@
+{
+  "name": "shortlink-worker",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "test": "node --no-warnings --test test/worker.test.mjs",
+    "dev": "node --no-warnings dev/server.mjs",
+    "db:init": "wrangler d1 execute shortlink --remote --file=schema.sql",
+    "deploy": "wrangler deploy"
+  },
+  "engines": {
+    "node": ">=22"
+  }
+}

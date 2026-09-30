@@ -1,0 +1,5 @@
+# MCP サーバー（2.x の MCPServer）
+mcp>=2
+
+# 任意: 印刷物用の QR コード（make_qr）を使うなら
+qrcode

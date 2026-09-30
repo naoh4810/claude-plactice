@@ -1,0 +1,14 @@
+name = "shortlink"
+main = "src/index.js"
+compatibility_date = "2026-09-01"
+
+# 自分のドメインで使う場合は routes を設定する（例: s.example.jp/*）
+# routes = [{ pattern = "s.example.jp/*", zone_name = "example.jp" }]
+
+[[d1_databases]]
+binding = "DB"
+database_name = "shortlink"
+database_id = "<wrangler d1 create shortlink で表示される ID>"
+
+# 管理用トークンは wrangler.toml に書かず、次のコマンドで登録する:
+#   npx wrangler secret put ADMIN_TOKEN
