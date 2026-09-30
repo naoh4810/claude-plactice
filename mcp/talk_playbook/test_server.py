@@ -18,7 +18,7 @@ import server  # noqa: E402
 
 # 「実演できる」デモと、その実装があるディレクトリ
 READY_DIRS = {"A1": "sales_sheet", "B1": "form_report", "B2": "shop_ops", "B3": "knowledge_search",
-              "B5": "sns_planner", "B6": "shortlink"}
+              "B5": "sns_planner", "B6": "shortlink", "B8": "tax_office"}
 
 
 @pytest.fixture(autouse=True)
@@ -72,11 +72,15 @@ def test_unknown_falls_back_to_general():
 # --- 手引きと交流会の準備 -------------------------------------------------------------
 
 def test_playbook_marks_ideas_that_cannot_be_shown_yet():
-    pb = server.get_playbook("tax_accountant")
+    pb = server.get_playbook("dental_clinic")
     statuses = {i["demo"]["id"]: i["demo"]["status"] for i in pb["ideas"]}
-    assert statuses["B8"].startswith("構想")
+    assert statuses["B7"].startswith("構想")
     assert statuses["B3"] == "実演できる"
-    assert pb["demo_to_show"]["id"] == "B3"          # 構想の B8 ではなく、見せられる B3
+    assert pb["demo_to_show"]["id"] == "B3"          # 構想の B7 ではなく、見せられる B3
+
+
+def test_tax_accountant_now_shows_the_deadline_demo():
+    assert server.get_playbook("tax_accountant")["demo_to_show"]["id"] == "B8"
 
 
 def test_get_playbook_accepts_free_text():
@@ -88,7 +92,7 @@ def test_prep_for_event_groups_by_industry():
     assert [a["industry"] for a in res["attendees"]] == [
         "税理士・会計事務所", "税理士・会計事務所", "整体・鍼灸・治療院", "個人事業主・小さな会社（業種が分からないとき）"]
     assert len(res["cautions_by_industry"]) == 3
-    assert "社内ナレッジ検索MCP（出典付き・資料を外に出さない）" in res["demos_to_prepare"]
+    assert "士業の期限・書類MCP（顧問先ごとの期限の自動計算・書類の回収状況・催促の下書き）" in res["demos_to_prepare"]
 
 
 # --- 現場メモ ---------------------------------------------------------------------

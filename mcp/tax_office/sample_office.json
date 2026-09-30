@@ -1,0 +1,35 @@
+{
+ "_note": "デモ用の架空の事務所と顧問先。実在の会社・人物・数字は入れないこと。",
+ "office": "サンプル会計事務所",
+ "as_of": "2026-09-30",
+ "tracking_since": "2026-09-01",
+ "clients": [
+  {"id": "c01", "name": "サンプル工業株式会社", "type": "法人", "fiscal_year_end_month": 3, "consumption_tax": true,
+   "filing_extension": true, "withholding": "納期の特例", "employees": true, "depreciable_assets": true,
+   "contact": "メール（経理担当）"},
+  {"id": "c02", "name": "株式会社サンプル商事", "type": "法人", "fiscal_year_end_month": 7, "consumption_tax": true,
+   "withholding": "毎月", "employees": true, "contact": "電話（社長）"},
+  {"id": "c03", "name": "合同会社サンプルデザイン", "type": "法人", "fiscal_year_end_month": 8, "consumption_tax": true,
+   "contact": "LINE（代表）"},
+  {"id": "c04", "name": "サンプル整体院", "type": "個人", "contact": "LINE（院長）"},
+  {"id": "c05", "name": "サンプル不動産株式会社", "type": "法人", "fiscal_year_end_month": 9, "consumption_tax": true,
+   "withholding": "納期の特例", "employees": true, "depreciable_assets": true, "contact": "メール（経理担当）"},
+  {"id": "c06", "name": "サンプル食堂", "type": "個人", "consumption_tax": true, "withholding": "納期の特例",
+   "employees": true, "contact": "LINE（店主）"}
+ ],
+ "received": {
+  "c02|決算|2026-07期": ["通帳のコピー（期末まで）", "売上・経費の請求書と領収書", "売掛金・買掛金の残高一覧", "期末の在庫表"],
+  "c03|決算|2026-08期": ["通帳のコピー（期末まで）", "売上・経費の請求書と領収書"],
+  "c02|源泉所得税|2026-09分": ["給与・報酬の支払額の一覧"]
+ },
+ "done": {
+  "c02|源泉所得税|2026-08分|源泉所得税の納付": "2026-09-08"
+ },
+ "reminders": {
+  "c03|決算|2026-08期": ["2026-09-18 LINE"]
+ },
+ "custom": [
+  {"id": "t1", "client_id": "c01", "title": "役員変更登記（変更日から2週間以内）", "due": "2026-10-09",
+   "documents": ["株主総会議事録", "就任承諾書", "印鑑証明書"], "note": "9/25 の株主総会で役員変更"}
+ ]
+}
