@@ -1,0 +1,28 @@
+BEGIN:VCALENDAR
+VERSION:2.0
+PRODID:-//sample//sample export//JA
+BEGIN:VEVENT
+UID:sample-1001@example.com
+DTSTART;TZID=Asia/Tokyo:20261105T190000
+DTEND;TZID=Asia/Tokyo:20261105T210000
+SUMMARY:創業カフェ交流会 第3回
+LOCATION:サンプル市 創業支援センター
+URL:https://example.com/events/1001
+DESCRIPTION:創業1年以内の方\, 創業予定の方向けの交流会です。\n参加費 1\,000円
+END:VEVENT
+BEGIN:VEVENT
+UID:sample-1002@example.com
+DTSTART:20261021T093000Z
+DTEND:20261021T113000Z
+SUMMARY:女性起業家ミートアップ #6
+LOCATION:サンプルコワーキング
+URL:https://example.com/events/1002
+END:VEVENT
+BEGIN:VEVENT
+UID:sample-1003@example.com
+DTSTART;VALUE=DATE:20261114
+SUMMARY:サンプル市 産業フェア（出展者交流
+ 会あり）
+LOCATION:サンプル市 産業会館
+END:VEVENT
+END:VCALENDAR
