@@ -20,7 +20,7 @@ import server  # noqa: E402
 READY_DIRS = {"A1": "sales_sheet", "B4": "problem_bank", "B1": "form_report", "B2": "shop_ops", "B3": "knowledge_search",
               "B5": "sns_planner", "B6": "shortlink", "B7": "line_recall",
               "B8": "tax_office", "B9": "photo_estimate",
-              "B11": "household_review"}
+              "B10": "event_matching", "B11": "household_review"}
 
 
 @pytest.fixture(autouse=True)
@@ -73,12 +73,18 @@ def test_unknown_falls_back_to_general():
 
 # --- 手引きと交流会の準備 -------------------------------------------------------------
 
-def test_playbook_marks_ideas_that_cannot_be_shown_yet():
+def test_playbook_marks_ideas_that_cannot_be_shown_yet(monkeypatch):
+    # いまは全部実演できるので、B10 を構想に戻したときの振る舞いを確かめる
+    monkeypatch.setitem(server.DEMOS, "B10", (server.DEMOS["B10"][0], "idea"))
     pb = server.get_playbook("community")
     statuses = {i["demo"]["id"]: i["demo"]["status"] for i in pb["ideas"]}
     assert statuses["B10"].startswith("構想")
     assert statuses["B6"] == "実演できる"
     assert pb["demo_to_show"]["id"] == "B6"          # 構想の B10 ではなく、見せられる B6
+
+
+def test_community_now_shows_the_matching_demo():
+    assert server.get_playbook("community")["demo_to_show"]["id"] == "B10"
 
 
 def test_tutor_now_shows_the_problem_bank_demo():
