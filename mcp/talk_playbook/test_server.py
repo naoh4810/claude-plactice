@@ -19,7 +19,7 @@ import server  # noqa: E402
 # 「実演できる」デモと、その実装があるディレクトリ
 READY_DIRS = {"A1": "sales_sheet", "B1": "form_report", "B2": "shop_ops", "B3": "knowledge_search",
               "B5": "sns_planner", "B6": "shortlink", "B7": "line_recall",
-              "B8": "tax_office"}
+              "B8": "tax_office", "B9": "photo_estimate"}
 
 
 @pytest.fixture(autouse=True)
@@ -78,6 +78,10 @@ def test_playbook_marks_ideas_that_cannot_be_shown_yet():
     assert statuses["B4"].startswith("構想")
     assert statuses["B1"] == "実演できる"
     assert pb["demo_to_show"]["id"] == "B1"          # 構想の B4 ではなく、見せられる B1
+
+
+def test_construction_now_shows_the_estimate_demo():
+    assert server.get_playbook("外壁塗装")["demo_to_show"]["id"] == "B9"
 
 
 def test_tax_accountant_now_shows_the_deadline_demo():
