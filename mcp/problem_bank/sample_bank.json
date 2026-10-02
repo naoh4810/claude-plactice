@@ -1,0 +1,499 @@
+{
+ "_note": "デモ用の架空の生徒と問題。実在の生徒の名前・成績は入れないこと。",
+ "as_of": "2026-10-01",
+ "targets_per_cell": 3,
+ "problems": [
+  {
+   "id": "P001",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "正負の数",
+   "difficulty": 1,
+   "question": "(−3)＋(＋8) を計算しなさい。",
+   "answer": "5",
+   "explanation": "符号が違う数の和は、絶対値の差 8−3＝5 に、絶対値の大きい方（＋8）の符号をつける。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P002",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "正負の数",
+   "difficulty": 1,
+   "question": "(−7)−(−2) を計算しなさい。",
+   "answer": "−5",
+   "explanation": "ひく数の符号を変えて加法にする：(−7)＋(＋2)＝−5。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P003",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "正負の数",
+   "difficulty": 2,
+   "question": "(−4)×(＋3)−(−6) を計算しなさい。",
+   "answer": "−6",
+   "explanation": "乗法を先に計算：(−4)×(＋3)＝−12。−12−(−6)＝−12＋6＝−6。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P004",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "正負の数",
+   "difficulty": 2,
+   "question": "(−2)³ を計算しなさい。",
+   "answer": "−8",
+   "explanation": "(−2)×(−2)×(−2)＝−8。負の数を奇数回かけると負になる。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P005",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "正負の数",
+   "difficulty": 3,
+   "question": "−3²＋(−3)² を計算しなさい。",
+   "answer": "0",
+   "explanation": "−3²＝−(3×3)＝−9、(−3)²＝(−3)×(−3)＝9。−9＋9＝0。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P006",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "正負の数",
+   "difficulty": 3,
+   "question": "12÷(−4)×(−2)² を計算しなさい。",
+   "answer": "−12",
+   "explanation": "累乗を先に：(−2)²＝4。12÷(−4)＝−3、−3×4＝−12。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P007",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "文字式",
+   "difficulty": 1,
+   "question": "3a＋5a を計算しなさい。",
+   "answer": "8a",
+   "explanation": "文字の部分が同じ項は、係数どうしを足す：3＋5＝8。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P008",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "文字式",
+   "difficulty": 1,
+   "question": "2x−7x を計算しなさい。",
+   "answer": "−5x",
+   "explanation": "係数どうしを計算：2−7＝−5。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P009",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "文字式",
+   "difficulty": 2,
+   "question": "3(x−2)＋2(x＋4) を計算しなさい。",
+   "answer": "5x＋2",
+   "explanation": "分配法則で 3x−6＋2x＋8。同類項をまとめて 5x＋2。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P010",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "文字式",
+   "difficulty": 2,
+   "question": "2(3a−1)−(a−5) を計算しなさい。",
+   "answer": "5a＋3",
+   "explanation": "6a−2−a＋5。かっこの前のマイナスで符号が変わる点に注意。5a＋3。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P011",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "文字式",
+   "difficulty": 3,
+   "question": "x＝−2 のとき、3x²−x の値を求めなさい。",
+   "answer": "14",
+   "explanation": "3×(−2)²−(−2)＝3×4＋2＝14。負の数を代入するときはかっこをつける。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P012",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "文字式",
+   "difficulty": 3,
+   "question": "(4x−6)/2 − (x−3) を計算しなさい。",
+   "answer": "x",
+   "explanation": "(4x−6)/2＝2x−3。2x−3−x＋3＝x。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P013",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "一次方程式",
+   "difficulty": 1,
+   "question": "方程式 x＋7＝12 を解きなさい。",
+   "answer": "x＝5",
+   "explanation": "両辺から7をひく：x＝12−7＝5。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P014",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "一次方程式",
+   "difficulty": 1,
+   "question": "方程式 3x＝−18 を解きなさい。",
+   "answer": "x＝−6",
+   "explanation": "両辺を3でわる：x＝−18÷3＝−6。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P015",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "一次方程式",
+   "difficulty": 2,
+   "question": "方程式 4x−5＝2x＋9 を解きなさい。",
+   "answer": "x＝7",
+   "explanation": "移項して 4x−2x＝9＋5、2x＝14、x＝7。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P016",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "一次方程式",
+   "difficulty": 2,
+   "question": "方程式 3(x−1)＝x＋5 を解きなさい。",
+   "answer": "x＝4",
+   "explanation": "かっこを外して 3x−3＝x＋5。2x＝8、x＝4。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P017",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "一次方程式",
+   "difficulty": 3,
+   "question": "方程式 x/2 − 1 ＝ x/3 を解きなさい。",
+   "answer": "x＝6",
+   "explanation": "両辺に6をかけて分母をはらう：3x−6＝2x。x＝6。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P018",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "一次方程式",
+   "difficulty": 3,
+   "question": "方程式 0.3x＋1.2＝0.5x−0.4 を解きなさい。",
+   "answer": "x＝8",
+   "explanation": "両辺に10をかける：3x＋12＝5x−4。−2x＝−16、x＝8。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P019",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "比例と反比例",
+   "difficulty": 1,
+   "question": "y＝3x で、x＝4 のときの y の値を求めなさい。",
+   "answer": "12",
+   "explanation": "x に4を代入：y＝3×4＝12。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P020",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "比例と反比例",
+   "difficulty": 1,
+   "question": "y は x に比例し、x＝2 のとき y＝10 です。y を x の式で表しなさい。",
+   "answer": "y＝5x",
+   "explanation": "y＝ax に x＝2, y＝10 を代入：10＝2a、a＝5。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P021",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "比例と反比例",
+   "difficulty": 2,
+   "question": "y は x に反比例し、x＝3 のとき y＝8 です。y を x の式で表しなさい。",
+   "answer": "y＝24/x",
+   "explanation": "y＝a/x に代入：8＝a/3、a＝24。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P022",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "比例と反比例",
+   "difficulty": 2,
+   "question": "y＝−2x で、y＝10 のときの x の値を求めなさい。",
+   "answer": "x＝−5",
+   "explanation": "10＝−2x、x＝−5。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P023",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "比例と反比例",
+   "difficulty": 3,
+   "question": "反比例 y＝a/x のグラフが点(2, −6)を通るとき、x＝−3 のときの y の値を求めなさい。",
+   "answer": "4",
+   "explanation": "−6＝a/2 より a＝−12。y＝−12/(−3)＝4。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P024",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "比例と反比例",
+   "difficulty": 3,
+   "question": "比例 y＝ax のグラフが点(−4, 6)を通るとき、a の値を求めなさい。",
+   "answer": "a＝−3/2",
+   "explanation": "6＝a×(−4)、a＝−6/4＝−3/2。",
+   "status": "確認済み",
+   "source": "自作",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P025",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "一次方程式",
+   "difficulty": 1,
+   "question": "方程式 2x＋3＝11 を解きなさい。",
+   "answer": "x＝7",
+   "explanation": "両辺から3をひいて 2x＝8 …",
+   "status": "下書き",
+   "source": "AI生成",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P026",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "一次方程式",
+   "difficulty": 2,
+   "question": "方程式 5x−2＝3x＋6 を解きなさい。",
+   "answer": "x＝4",
+   "explanation": "移項して 2x＝8、x＝4。",
+   "status": "下書き",
+   "source": "AI生成",
+   "created": "2026-09-01"
+  },
+  {
+   "id": "P027",
+   "subject": "数学",
+   "grade": "中1",
+   "unit": "比例と反比例",
+   "difficulty": 2,
+   "question": "y は x に反比例し、x＝4 のとき y＝−3 です。x＝6 のときの y の値を求めなさい。",
+   "answer": "−2",
+   "explanation": "a＝4×(−3)＝−12。y＝−12/6＝−2。",
+   "status": "下書き",
+   "source": "AI生成",
+   "created": "2026-09-01"
+  }
+ ],
+ "students": [
+  {
+   "id": "S1",
+   "name": "サンプル 一郎",
+   "grade": "中1",
+   "subjects": [
+    "数学"
+   ]
+  },
+  {
+   "id": "S2",
+   "name": "サンプル 花",
+   "grade": "中1",
+   "subjects": [
+    "数学"
+   ]
+  }
+ ],
+ "results": [
+  {
+   "student_id": "S1",
+   "problem_id": "P013",
+   "correct": true,
+   "date": "2026-09-12"
+  },
+  {
+   "student_id": "S1",
+   "problem_id": "P014",
+   "correct": true,
+   "date": "2026-09-12"
+  },
+  {
+   "student_id": "S1",
+   "problem_id": "P015",
+   "correct": false,
+   "date": "2026-09-12"
+  },
+  {
+   "student_id": "S1",
+   "problem_id": "P016",
+   "correct": false,
+   "date": "2026-09-12"
+  },
+  {
+   "student_id": "S1",
+   "problem_id": "P017",
+   "correct": false,
+   "date": "2026-09-12"
+  },
+  {
+   "student_id": "S1",
+   "problem_id": "P001",
+   "correct": true,
+   "date": "2026-09-12"
+  },
+  {
+   "student_id": "S1",
+   "problem_id": "P002",
+   "correct": true,
+   "date": "2026-09-12"
+  },
+  {
+   "student_id": "S1",
+   "problem_id": "P007",
+   "correct": true,
+   "date": "2026-09-12"
+  },
+  {
+   "student_id": "S1",
+   "problem_id": "P009",
+   "correct": true,
+   "date": "2026-09-12"
+  },
+  {
+   "student_id": "S1",
+   "problem_id": "P015",
+   "correct": true,
+   "date": "2026-09-26"
+  },
+  {
+   "student_id": "S1",
+   "problem_id": "P018",
+   "correct": false,
+   "date": "2026-09-26"
+  },
+  {
+   "student_id": "S1",
+   "problem_id": "P003",
+   "correct": true,
+   "date": "2026-09-26"
+  },
+  {
+   "student_id": "S2",
+   "problem_id": "P001",
+   "correct": true,
+   "date": "2026-09-15"
+  },
+  {
+   "student_id": "S2",
+   "problem_id": "P002",
+   "correct": false,
+   "date": "2026-09-15"
+  },
+  {
+   "student_id": "S2",
+   "problem_id": "P003",
+   "correct": false,
+   "date": "2026-09-15"
+  },
+  {
+   "student_id": "S2",
+   "problem_id": "P004",
+   "correct": false,
+   "date": "2026-09-15"
+  },
+  {
+   "student_id": "S2",
+   "problem_id": "P005",
+   "correct": false,
+   "date": "2026-09-15"
+  },
+  {
+   "student_id": "S2",
+   "problem_id": "P013",
+   "correct": true,
+   "date": "2026-09-15"
+  },
+  {
+   "student_id": "S2",
+   "problem_id": "P014",
+   "correct": true,
+   "date": "2026-09-15"
+  },
+  {
+   "student_id": "S2",
+   "problem_id": "P019",
+   "correct": true,
+   "date": "2026-09-15"
+  }
+ ],
+ "worksheets": []
+}

@@ -17,7 +17,7 @@ sys.path.insert(0, str(HERE))
 import server  # noqa: E402
 
 # 「実演できる」デモと、その実装があるディレクトリ
-READY_DIRS = {"A1": "sales_sheet", "B1": "form_report", "B2": "shop_ops", "B3": "knowledge_search",
+READY_DIRS = {"A1": "sales_sheet", "B4": "problem_bank", "B1": "form_report", "B2": "shop_ops", "B3": "knowledge_search",
               "B5": "sns_planner", "B6": "shortlink", "B7": "line_recall",
               "B8": "tax_office", "B9": "photo_estimate",
               "B11": "household_review"}
@@ -74,11 +74,15 @@ def test_unknown_falls_back_to_general():
 # --- 手引きと交流会の準備 -------------------------------------------------------------
 
 def test_playbook_marks_ideas_that_cannot_be_shown_yet():
-    pb = server.get_playbook("tutor")
+    pb = server.get_playbook("community")
     statuses = {i["demo"]["id"]: i["demo"]["status"] for i in pb["ideas"]}
-    assert statuses["B4"].startswith("構想")
-    assert statuses["B1"] == "実演できる"
-    assert pb["demo_to_show"]["id"] == "B1"          # 構想の B4 ではなく、見せられる B1
+    assert statuses["B10"].startswith("構想")
+    assert statuses["B6"] == "実演できる"
+    assert pb["demo_to_show"]["id"] == "B6"          # 構想の B10 ではなく、見せられる B6
+
+
+def test_tutor_now_shows_the_problem_bank_demo():
+    assert server.get_playbook("家庭教師")["demo_to_show"]["id"] == "B4"
 
 
 def test_fp_now_shows_the_household_demo():
