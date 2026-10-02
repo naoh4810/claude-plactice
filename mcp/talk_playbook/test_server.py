@@ -18,7 +18,8 @@ import server  # noqa: E402
 
 # 「実演できる」デモと、その実装があるディレクトリ
 READY_DIRS = {"A1": "sales_sheet", "B1": "form_report", "B2": "shop_ops", "B3": "knowledge_search",
-              "B5": "sns_planner", "B6": "shortlink", "B8": "tax_office"}
+              "B5": "sns_planner", "B6": "shortlink", "B7": "line_recall",
+              "B8": "tax_office"}
 
 
 @pytest.fixture(autouse=True)
@@ -72,15 +73,22 @@ def test_unknown_falls_back_to_general():
 # --- 手引きと交流会の準備 -------------------------------------------------------------
 
 def test_playbook_marks_ideas_that_cannot_be_shown_yet():
-    pb = server.get_playbook("dental_clinic")
+    pb = server.get_playbook("tutor")
     statuses = {i["demo"]["id"]: i["demo"]["status"] for i in pb["ideas"]}
-    assert statuses["B7"].startswith("構想")
-    assert statuses["B3"] == "実演できる"
-    assert pb["demo_to_show"]["id"] == "B3"          # 構想の B7 ではなく、見せられる B3
+    assert statuses["B4"].startswith("構想")
+    assert statuses["B1"] == "実演できる"
+    assert pb["demo_to_show"]["id"] == "B1"          # 構想の B4 ではなく、見せられる B1
 
 
 def test_tax_accountant_now_shows_the_deadline_demo():
     assert server.get_playbook("tax_accountant")["demo_to_show"]["id"] == "B8"
+
+
+def test_clinics_and_salons_now_show_the_recall_demo():
+    for industry in ("dental_clinic", "bodywork", "beauty_salon"):
+        assert server.get_playbook(industry)["demo_to_show"]["id"] in ("B7", "B5")
+    assert server.get_playbook("dental_clinic")["demo_to_show"]["id"] == "B7"
+    assert server.get_playbook("bodywork")["demo_to_show"]["id"] == "B7"
 
 
 def test_get_playbook_accepts_free_text():
