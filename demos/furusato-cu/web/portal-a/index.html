@@ -1,0 +1,54 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>ポータルA 返礼品一覧</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+  <nav class="side">
+    <div class="logo">ポータルA<small>事業者管理画面（デモ）</small></div>
+    <a class="on">返礼品一覧</a><a>受注管理</a><a>レポート</a><a>事業者情報</a>
+  </nav>
+  <main>
+    <div class="head">
+      <h1>返礼品一覧</h1>
+      <a class="btn primary" id="new-link">＋ 新規登録</a>
+    </div>
+    <p class="hint">登録した返礼品は「下書き」になります。チェックを入れて公開すると、寄付者向けサイトに掲載されます。</p>
+    <table class="list">
+      <thead><tr><th></th><th>ID</th><th>返礼品名</th><th>事業者</th><th>カテゴリ</th><th>寄付金額</th><th>ステータス</th><th>登録日時</th></tr></thead>
+      <tbody id="rows"></tbody>
+    </table>
+    <div class="foot"><button class="btn" id="publish">選択した返礼品を公開</button></div>
+  </main>
+</div>
+<script src="common.js"></script>
+<script>
+  document.getElementById("new-link").href = "new.html?layout=" + LAYOUT;
+  if (LAYOUT === "v2") {
+    document.getElementById("new-link").textContent = "返礼品を追加";
+    document.querySelector(".head").prepend(document.getElementById("new-link"));
+  }
+  async function load() {
+    const items = await api("GET", "/api/items?portal=a");
+    document.getElementById("rows").innerHTML = items.map(x => `
+      <tr>
+        <td>${x.status === "下書き" ? `<input type="checkbox" value="${x.id}">` : ""}</td>
+        <td>${x.id}</td><td>${esc(x.name)}</td><td>${esc(x.vendor)}</td><td>${esc(x.category)}</td>
+        <td class="num">${Number(x.amount).toLocaleString()}円</td>
+        <td><span class="st ${x.status === "公開中" ? "ok" : "draft"}">${x.status}</span></td>
+        <td>${x.created_at}</td>
+      </tr>`).join("");
+  }
+  document.getElementById("publish").addEventListener("click", async () => {
+    const ids = [...document.querySelectorAll("#rows input:checked")].map(c => Number(c.value));
+    if (!ids.length) return alert("公開する返礼品を選択してください");
+    await api("POST", "/api/publish", { portal: "a", ids });
+    load();
+  });
+  load();
+</script>
+</body>
+</html>

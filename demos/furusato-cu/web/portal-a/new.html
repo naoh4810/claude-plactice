@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>ポータルA 返礼品の新規登録</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="layout">
+  <nav class="side">
+    <div class="logo">ポータルA<small>事業者管理画面（デモ）</small></div>
+    <a class="on">返礼品一覧</a><a>受注管理</a><a>レポート</a><a>事業者情報</a>
+  </nav>
+  <main>
+    <div class="head"><h1 id="title">返礼品の新規登録</h1></div>
+    <form class="card" id="form" autocomplete="off"></form>
+  </main>
+</div>
+<script src="common.js"></script>
+<script src="/dropdown.js"></script>
+<script>
+  const CATEGORIES = ["体験", "食事券", "工芸品", "チケット", "宿泊"];
+  const select = (name, opts) => `<select name="${name}"><option value="">選択してください</option>${opts.map(o => `<option>${o}</option>`).join("")}</select>`;
+  const radios = (name, opts) => opts.map(o => `<label style="margin-right:14px"><input type="radio" name="${name}" value="${o}"> ${o}</label>`).join("");
+  const row = (label, html, req) => `<div class="row"><label class="${req ? "req" : ""}">${label}</label><div>${html}</div></div>`;
+
+  // v1 と v2 で項目の順番・ラベル・入力部品・ボタン位置を変えている
+  const F = {
+    name: l => row(l, `<input type="text" name="name">`, true),
+    vendor: l => row(l, `<input type="text" name="vendor">`, true),
+    category: (l, kind) => row(l, kind === "radio" ? radios("category", CATEGORIES) : select("category", CATEGORIES), true),
+    amount: l => row(l, `<input type="number" name="amount" placeholder="例：10000">`, true),
+    description: l => row(l, `<textarea name="description"></textarea>`),
+    period: l => row(l, `<input type="text" name="period" placeholder="例：2026/04/01〜2027/03/31">`),
+    capacity: l => row(l, `<input type="number" name="capacity">`),
+    reservation: (l, kind) => row(l, kind === "select" ? select("reservation", ["要", "不要"]) : radios("reservation", ["要", "不要"])),
+  };
+  const save = label => `<div class="row"><span></span><div><button class="btn primary" type="submit">${label}</button> <a class="btn" href="index.html?layout=${LAYOUT}">キャンセル</a></div></div>`;
+  const form = document.getElementById("form");
+  if (LAYOUT === "v2") {
+    document.getElementById("title").textContent = "返礼品を追加する";
+    form.innerHTML = save("登録内容を保存") + `<div class="grid2">` +
+      F.amount("必要寄付額（円）") + F.category("返礼品の種類", "radio") +
+      F.name("お礼の品の名称") + F.vendor("提供事業者") +
+      F.period("受付期間") + F.reservation("事前予約", "select") +
+      F.capacity("利用人数") + F.description("紹介文") + `</div><div class="error" id="err"></div>`;
+  } else {
+    form.innerHTML = F.name("返礼品名") + F.vendor("事業者名") + F.category("カテゴリ") +
+      F.amount("寄付金額（円）") + F.description("内容説明") + F.period("提供期間") +
+      F.capacity("定員（名）") + F.reservation("予約") + `<div class="error" id="err"></div>` + save("保存する");
+  }
+  enhanceSelects(form);
+
+  form.addEventListener("submit", async e => {
+    e.preventDefault();
+    const fd = new FormData(form);
+    const item = Object.fromEntries(fd.entries());
+    try {
+      await api("POST", "/api/items", { portal: "a", item });
+      location.href = "index.html?layout=" + LAYOUT;
+    } catch (err) {
+      document.getElementById("err").textContent = err.message + "：" + (err.data?.fields || []).join(", ");
+    }
+  });
+</script>
+</body>
+</html>

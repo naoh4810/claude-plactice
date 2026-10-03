@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>ポータルB 事業者管理画面</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "IPAGothic", "Hiragino Sans", "Meiryo", sans-serif; background: #fff8f1; color: #2d2a26; }
+  header { background: #c8551b; color: #fff; display: flex; align-items: center; gap: 28px; padding: 0 22px; height: 52px; }
+  header .logo { font-weight: bold; font-size: 18px; }
+  header .logo small { font-size: 11px; font-weight: normal; margin-left: 6px; opacity: .85; }
+  header nav span { margin-right: 18px; font-size: 14px; opacity: .9; }
+  main { padding: 20px 28px; }
+  h1 { font-size: 19px; margin: 0 0 12px; }
+  .btn { padding: 8px 18px; border-radius: 20px; border: 1px solid #c8551b; background: #fff; color: #c8551b; font-size: 14px; cursor: pointer; font-family: inherit; }
+  .btn.primary { background: #c8551b; color: #fff; }
+  .tools { display: flex; gap: 10px; margin-bottom: 12px; }
+  .cards { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; }
+  .item { background: #fff; border: 1px solid #f0d9c6; border-radius: 10px; padding: 12px 14px; font-size: 13px; }
+  .item .nm { font-weight: bold; font-size: 14px; margin: 6px 0; }
+  .item .meta { color: #6b625a; }
+  .tag { display: inline-block; font-size: 11px; padding: 2px 8px; border-radius: 10px; background: #eee; }
+  .tag.live { background: #dff3e4; color: #1f6b34; }
+  .tag.wait { background: #e5ecfb; color: #27489a; }
+  .tag.pre { background: #fde4d3; color: #9a3d0e; }
+  .steps { display: flex; gap: 6px; margin-bottom: 16px; }
+  .steps div { flex: 1; text-align: center; padding: 8px; background: #f3e6da; font-size: 13px; color: #8a7a6c; }
+  .steps div.on { background: #c8551b; color: #fff; }
+  .panel { background: #fff; border: 1px solid #f0d9c6; border-radius: 10px; padding: 20px 24px; max-width: 720px; }
+  .f { margin-bottom: 14px; font-size: 14px; }
+  .f label { display: block; margin-bottom: 4px; font-weight: bold; }
+  .f input[type=text], .f input[type=number], .f select, .f textarea { width: 100%; padding: 8px 10px; border: 1px solid #d6c3b2; border-radius: 6px; font-size: 14px; font-family: inherit; }
+  .f textarea { height: 60px; }
+  .f .dd-btn { padding: 8px 30px 8px 10px; border-color: #d6c3b2; border-radius: 6px; }
+  .nav { display: flex; justify-content: space-between; margin-top: 8px; }
+  .err { color: #c62828; font-size: 13px; min-height: 18px; }
+  dl { display: grid; grid-template-columns: 140px 1fr; gap: 6px 10px; font-size: 14px; margin: 0 0 12px; }
+  dt { color: #6b625a; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<header>
+  <div class="logo">ポータルB<small>事業者管理画面（デモ）</small></div>
+  <nav><span>お礼品</span><span>寄付・発送</span><span>お知らせ</span></nav>
+</header>
+<main>
+  <section id="list">
+    <h1>登録済みのお礼品</h1>
+    <div class="tools">
+      <button class="btn primary" id="start">＋ 新しいお礼品を登録</button>
+      <button class="btn" id="apply">チェックしたお礼品を審査申請</button>
+    </div>
+    <div class="cards" id="cards"></div>
+  </section>
+
+  <section id="wizard" class="hidden">
+    <div class="steps"><div data-step="1">1. 基本情報</div><div data-step="2">2. 提供条件</div><div data-step="3">3. 確認</div></div>
+    <div class="panel">
+      <div data-pane="1">
+        <div class="f"><label>お礼品の名前</label><input type="text" id="name"></div>
+        <div class="f"><label>提供事業者</label><input type="text" id="vendor"></div>
+        <div class="f"><label>ジャンル</label><select id="category"><option value="">選択してください</option><option>体験</option><option>食事券</option><option>工芸品</option><option>チケット</option><option>宿泊</option></select></div>
+        <div class="f"><label>寄付金額（円）</label><input type="number" id="amount"></div>
+      </div>
+      <div data-pane="2" class="hidden">
+        <div class="f"><label>紹介文</label><textarea id="description"></textarea></div>
+        <div class="f"><label>提供期間</label><input type="text" id="period" placeholder="例：2026/04/01〜2027/03/31"></div>
+        <div class="f"><label>利用可能人数</label><input type="number" id="capacity"></div>
+        <div class="f"><label>事前予約</label>
+          <label style="font-weight:normal;display:inline"><input type="radio" name="reservation" value="要"> 必要</label>
+          <label style="font-weight:normal;display:inline;margin-left:16px"><input type="radio" name="reservation" value="不要"> 不要</label>
+        </div>
+      </div>
+      <div data-pane="3" class="hidden"><dl id="confirm"></dl></div>
+      <div class="err" id="err"></div>
+      <div class="nav">
+        <button class="btn" id="back">戻る</button>
+        <button class="btn primary" id="next">次へ</button>
+      </div>
+    </div>
+  </section>
+</main>
+<script src="/dropdown.js"></script>
+<script>
+  async function api(method, url, body) {
+    const res = await fetch(url, { method, headers: { "Content-Type": "application/json" }, body: body ? JSON.stringify(body) : undefined });
+    const data = await res.json();
+    if (!res.ok) throw Object.assign(new Error(data.error || "error"), { data });
+    return data;
+  }
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const $ = id => document.getElementById(id);
+  const TAG = { "掲載中": "live", "審査中": "wait", "申請前": "pre" };
+  let step = 1;
+
+  async function loadList() {
+    const items = await api("GET", "/api/items?portal=b");
+    $("cards").innerHTML = items.map(x => `
+      <div class="item">
+        ${x.status === "申請前" ? `<input type="checkbox" value="${x.id}"> ` : ""}<span class="tag ${TAG[x.status] || ""}">${x.status}</span>
+        <div class="nm">${esc(x.name)}</div>
+        <div class="meta">${esc(x.vendor)} ／ ${esc(x.category)} ／ ${Number(x.amount).toLocaleString()}円</div>
+      </div>`).join("");
+  }
+  function collect() {
+    const r = document.querySelector("input[name=reservation]:checked");
+    return {
+      name: $("name").value, vendor: $("vendor").value, category: $("category").value, amount: $("amount").value,
+      description: $("description").value, period: $("period").value, capacity: $("capacity").value, reservation: r ? r.value : "",
+    };
+  }
+  function show(n) {
+    step = n; $("err").textContent = "";
+    document.querySelectorAll("[data-pane]").forEach(p => p.classList.toggle("hidden", Number(p.dataset.pane) !== n));
+    document.querySelectorAll("[data-step]").forEach(s => s.classList.toggle("on", Number(s.dataset.step) === n));
+    $("next").textContent = n === 3 ? "この内容で登録" : "次へ";
+    $("back").textContent = n === 1 ? "一覧に戻る" : "戻る";
+    if (n === 3) {
+      const it = collect();
+      const labels = { name: "お礼品の名前", vendor: "提供事業者", category: "ジャンル", amount: "寄付金額", description: "紹介文", period: "提供期間", capacity: "利用可能人数", reservation: "事前予約" };
+      $("confirm").innerHTML = Object.entries(labels).map(([k, l]) => `<dt>${l}</dt><dd style="margin:0">${esc(it[k]) || "（未入力）"}</dd>`).join("");
+    }
+  }
+  $("start").addEventListener("click", () => {
+    document.querySelectorAll("#wizard input[type=text], #wizard input[type=number], #wizard textarea").forEach(i => i.value = "");
+    document.querySelectorAll("#wizard input[type=radio]").forEach(i => i.checked = false);
+    $("category").value = ""; syncSelects();
+    $("list").classList.add("hidden"); $("wizard").classList.remove("hidden"); show(1);
+  });
+  $("back").addEventListener("click", () => {
+    if (step === 1) { $("wizard").classList.add("hidden"); $("list").classList.remove("hidden"); loadList(); }
+    else show(step - 1);
+  });
+  $("next").addEventListener("click", async () => {
+    if (step === 1) {
+      const it = collect();
+      if (!it.name || !it.vendor || !it.category || !it.amount) { $("err").textContent = "基本情報はすべて入力してください"; return; }
+    }
+    if (step < 3) return show(step + 1);
+    try {
+      await api("POST", "/api/items", { portal: "b", item: collect() });
+      $("wizard").classList.add("hidden"); $("list").classList.remove("hidden"); loadList();
+    } catch (err) { $("err").textContent = err.message; }
+  });
+  $("apply").addEventListener("click", async () => {
+    const ids = [...document.querySelectorAll("#cards input:checked")].map(c => Number(c.value));
+    if (!ids.length) return alert("審査申請するお礼品をチェックしてください");
+    await api("POST", "/api/publish", { portal: "b", ids });
+    loadList();
+  });
+  enhanceSelects();
+  loadList();
+</script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>返礼品登録シート</title>
+<style>
+  body { margin: 0; font-family: "IPAGothic", "Hiragino Sans", "Meiryo", sans-serif; background: #fff; color: #202124; }
+  .bar { display: flex; align-items: center; gap: 10px; padding: 10px 14px; border-bottom: 1px solid #dadce0; }
+  .bar .icon { width: 26px; height: 26px; background: #188038; border-radius: 4px; color: #fff; font-size: 15px; text-align: center; line-height: 26px; }
+  .bar .name { font-size: 16px; }
+  .fx { display: flex; border-bottom: 1px solid #dadce0; font-size: 13px; }
+  .fx span { padding: 5px 12px; color: #5f6368; border-right: 1px solid #dadce0; }
+  table { border-collapse: collapse; font-size: 12.5px; table-layout: fixed; }
+  th, td { border: 1px solid #e2e3e5; padding: 5px 6px; vertical-align: top; overflow-wrap: anywhere; }
+  thead th { background: #f8f9fa; color: #5f6368; font-weight: normal; }
+  td.rn { background: #f8f9fa; color: #5f6368; text-align: center; width: 30px; }
+  tr.head td { background: #e6f4ea; font-weight: bold; }
+  td.num { text-align: right; }
+  .note { margin: 14px; font-size: 12.5px; color: #5f6368; }
+</style>
+</head>
+<body>
+<div class="bar"><div class="icon">▦</div><div class="name" id="title">返礼品登録シート</div></div>
+<div class="fx"><span>fx</span><span id="fx">&nbsp;</span></div>
+<table id="grid"></table>
+<p class="note">※ 寄付金額・調達価格は円（税込）。掲載先「A・B」は両方のポータルに掲載。</p>
+<script>
+  const widths = [34, 190, 130, 58, 70, 70, 230, 150, 40, 40, 52];
+  fetch("/api/sheet").then(r => r.json()).then(sheet => {
+    document.getElementById("title").textContent = sheet.title;
+    const grid = document.getElementById("grid");
+    let html = "<thead><tr><th></th>" + widths.map((w, i) =>
+      `<th style="width:${w}px">${String.fromCharCode(65 + i)}</th>`).join("") + "</tr></thead><tbody>";
+    html += `<tr class="head"><td class="rn">1</td>` + sheet.columns.map(c => `<td>${c}</td>`).join("") + "</tr>";
+    sheet.rows.forEach((row, r) => {
+      html += `<tr><td class="rn">${r + 2}</td>` + row.map((v, i) =>
+        `<td class="${i === 4 || i === 5 || i === 8 ? "num" : ""}">${i === 4 || i === 5 ? (v ? Number(v).toLocaleString() : "") : v}</td>`
+      ).join("") + "</tr>";
+    });
+    grid.innerHTML = html + "</tbody>";
+    grid.addEventListener("click", e => {
+      if (e.target.tagName === "TD") document.getElementById("fx").textContent = e.target.textContent || " ";
+    });
+  });
+</script>
+</body>
+</html>

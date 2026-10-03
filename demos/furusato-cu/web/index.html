@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>デモ用デスクトップ</title>
+<style>
+  * { box-sizing: border-box; }
+  html, body { margin: 0; height: 100%; font-family: "IPAGothic", "Hiragino Sans", "Meiryo", sans-serif; background: #d9dde3; }
+  #tabs { height: 40px; display: flex; gap: 2px; padding: 6px 8px 0; background: #2b3036; }
+  .tab { padding: 0 18px; line-height: 34px; border-radius: 8px 8px 0 0; background: #4a515a; color: #e7e9ec; font-size: 14px; cursor: pointer; user-select: none; }
+  .tab.active { background: #f4f5f7; color: #1d2126; font-weight: bold; }
+  #frames { position: absolute; top: 40px; left: 0; right: 0; bottom: 0; }
+  body.captioned #frames { bottom: 56px; }
+  iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; background: #fff; display: none; }
+  iframe.active { display: block; }
+  #caption { position: absolute; left: 0; right: 0; bottom: 0; height: 56px; background: #111; color: #fff; display: none; align-items: center; gap: 12px; padding: 0 18px; font-size: 18px; }
+  body.captioned #caption { display: flex; }
+  #caption .badge { background: #d97757; color: #fff; font-size: 13px; padding: 3px 10px; border-radius: 12px; white-space: nowrap; }
+  #caption .text { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .ripple { position: fixed; width: 34px; height: 34px; margin: -17px 0 0 -17px; border: 3px solid #e5484d; border-radius: 50%; pointer-events: none; z-index: 99; animation: ripple .9s ease-out forwards; }
+  .ripple::after { content: ""; position: absolute; left: 12px; top: 12px; width: 4px; height: 4px; background: #e5484d; border-radius: 50%; }
+  @keyframes ripple { from { transform: scale(.4); opacity: 1; } to { transform: scale(1.6); opacity: 0; } }
+  #ask { position: fixed; inset: 0; background: rgba(0,0,0,.45); display: none; align-items: center; justify-content: center; z-index: 98; }
+  #ask.show { display: flex; }
+  #ask .box { width: 620px; background: #fff; border-radius: 12px; padding: 24px 28px; box-shadow: 0 10px 40px rgba(0,0,0,.3); }
+  #ask h2 { margin: 0 0 12px; font-size: 18px; color: #b4441f; }
+  #ask p { margin: 0 0 14px; font-size: 16px; line-height: 1.7; white-space: pre-wrap; }
+  #ask .answer { margin-top: 10px; padding: 10px 14px; background: #eef6ee; border-left: 4px solid #3a9a4a; font-size: 15px; display: none; }
+</style>
+</head>
+<body>
+<div id="tabs">
+  <div class="tab active" data-target="sheet">📊 返礼品登録シート</div>
+  <div class="tab" data-target="a">ポータルA 事業者管理画面</div>
+  <div class="tab" data-target="b">ポータルB 事業者管理画面</div>
+</div>
+<div id="frames">
+  <iframe id="sheet" class="active"></iframe>
+  <iframe id="a"></iframe>
+  <iframe id="b"></iframe>
+</div>
+<div id="caption"><span class="badge">AI 作業中</span><span class="text" id="caption-text">待機中</span></div>
+<div id="ask"><div class="box">
+  <h2>🙋 AIからの確認依頼</h2>
+  <p id="ask-q"></p>
+  <div class="answer" id="ask-a"></div>
+</div></div>
+<script>
+  // ?layout=v2 を付けると、ポータルAの画面レイアウトを変えた版で開く（AIが画面変更に追従できるかを見せる用）
+  const params = new URLSearchParams(location.search);
+  const layout = params.get("layout") || "v1";
+  document.getElementById("sheet").src = "/sheet/index.html";
+  document.getElementById("a").src = "/portal-a/index.html?layout=" + layout;
+  document.getElementById("b").src = "/portal-b/index.html";
+  if (params.get("caption") === "1") document.body.classList.add("captioned");
+
+  document.querySelectorAll(".tab").forEach(tab => tab.addEventListener("click", () => {
+    document.querySelectorAll(".tab").forEach(t => t.classList.toggle("active", t === tab));
+    document.querySelectorAll("iframe").forEach(f => f.classList.toggle("active", f.id === tab.dataset.target));
+  }));
+
+  // 以下はエージェント（agent.py）が録画用の演出として呼び出す
+  window.demo = {
+    caption(text) { document.getElementById("caption-text").textContent = text; },
+    click(x, y) {
+      const r = document.createElement("div");
+      r.className = "ripple"; r.style.left = x + "px"; r.style.top = y + "px";
+      document.body.appendChild(r); setTimeout(() => r.remove(), 1000);
+    },
+    ask(question) {
+      document.getElementById("ask-q").textContent = question;
+      document.getElementById("ask-a").style.display = "none";
+      document.getElementById("ask").classList.add("show");
+    },
+    answer(text) {
+      const a = document.getElementById("ask-a");
+      a.textContent = "担当者の回答：" + text; a.style.display = "block";
+    },
+    closeAsk() { document.getElementById("ask").classList.remove("show"); },
+  };
+</script>
+</body>
+</html>
