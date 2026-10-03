@@ -1,0 +1,13 @@
+services:
+  demo:
+    build: .
+    ports:
+      - "8080:8080"   # コントロールパネル
+      - "6080:6080"   # 仮想デスクトップの画面（noVNC）
+    # ANTHROPIC_API_KEY / SLACK_WEBHOOK_URL などはリポジトリ直下の .env から読む
+    env_file:
+      - path: ../../.env
+        required: false
+    volumes:
+      - ./recordings:/app/recordings   # 録画（等速版と早送り版）
+    shm_size: "1gb"

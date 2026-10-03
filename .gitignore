@@ -6,3 +6,9 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# Computer Use デモの録画
+demo/computer_use/recordings/*
+!demo/computer_use/recordings/.gitkeep
+demo/computer_use/site/invoices/*.pdf
+demo/computer_use/site/invoices/index.html

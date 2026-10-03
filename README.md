@@ -65,6 +65,17 @@ python scripts/generate_article.py
 
 ---
 
+## Computer Use 営業デモ
+
+AIがパソコンを操作して事務作業を片付ける様子を、お客さまに見せるためのデモ環境です。
+詳しくは [`demo/computer_use/README.md`](demo/computer_use/README.md)、見せ方は [`docs/computer_useデモ台本.md`](docs/computer_useデモ台本.md) を参照。
+
+```bash
+cd demo/computer_use && docker compose up --build   # → http://localhost:8080
+```
+
+---
+
 ## ディレクトリ
 
 ```
@@ -77,7 +88,9 @@ python scripts/generate_article.py
 ├─ config/topics.yml                    生成設定＋フォールバックのトピック
 ├─ articles/                            生成された記事（下書き）
 ├─ state/used.json                      記事化済みトピックの記録
-└─ docs/学習ロードマップ.md             記事化しやすい今後の学習テーマ
+├─ docs/学習ロードマップ.md             記事化しやすい今後の学習テーマ
+├─ docs/computer_useデモ台本.md         Computer Use デモの見せ方・トーク例
+└─ demo/computer_use/                   Computer Use 営業デモ（Docker）
 ```
 
 ## 注意

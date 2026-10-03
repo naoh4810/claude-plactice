@@ -1,0 +1,15 @@
+{
+  "policies": {
+    "DisableAppUpdate": true,
+    "DisableTelemetry": true,
+    "DisableFirefoxStudies": true,
+    "DontCheckDefaultBrowser": true,
+    "OverrideFirstRunPage": "",
+    "OverridePostUpdatePage": "",
+    "NoDefaultBookmarks": true,
+    "Homepage": { "URL": "about:blank", "StartPage": "homepage" },
+    "UserMessaging": { "WhatsNew": false, "ExtensionRecommendations": false, "FeatureRecommendations": false, "SkipOnboarding": true },
+    "FirefoxHome": { "Search": true, "TopSites": false, "SponsoredTopSites": false, "Highlights": false, "Pocket": false, "SponsoredPocket": false, "Snippets": false },
+    "PDFjs": { "Enabled": true }
+  }
+}
