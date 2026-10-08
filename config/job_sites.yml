@@ -1,0 +1,64 @@
+# 案件巡回の設定（scripts/job_hunter.py が読む）
+#
+# 各サイトの「一覧ページ」を開き、link_pattern に一致するリンクを案件として拾います。
+# その後、まだ台帳に無い案件だけ詳細ページを開いて本文を取り、Claude が判定します。
+#
+# ■ link_pattern の決め方
+#   実際に案件詳細ページを1つ開き、URL の形を見て正規表現を書きます。
+#   (\d+) の部分が「サイト内の案件番号」として重複防止キーになります。
+#   一覧ページにどんなリンクがあるか分からないときは:
+#     python scripts/job_crawl.py links <サイト名>
+#   で一覧ページ上のリンクを全部表示できます。
+#
+# ■ マナー（重要）
+#   各サイトの利用規約を確認し、高頻度アクセスは避けてください。
+#   既定は「1回の巡回で1サイト最大 max_details 件、ページ間 wait_sec 秒待つ」です。
+#   1日2〜3回程度の実行を想定しています。応募の自動送信は行いません。
+
+settings:
+  # 1サイトあたり、1回の巡回で詳細ページを開く最大件数
+  max_details: 15
+  # ページ遷移の間隔（秒）。下限〜上限のランダム
+  wait_sec: [3, 6]
+  # 詳細ページ本文の最大文字数（長すぎる本文は切り詰めてから判定に回す）
+  max_body_chars: 12000
+  # ブラウザを画面に出すか（false にすると裏で動く。ログインが必要なサイトは true 推奨）
+  headless: false
+
+sites:
+  - name: crowdworks
+    label: クラウドワークス
+    enabled: true
+    list_urls:
+      # 新着順。キーワード検索URLを追加してもOK（例: search?search%5Bkeywords%5D=ChatGPT&order=new）
+      - "https://crowdworks.jp/public/jobs/search?order=new"
+    link_pattern: "https://crowdworks\\.jp/public/jobs/(\\d+)"
+    login_url: "https://crowdworks.jp/login"
+
+  - name: lancers
+    label: ランサーズ
+    enabled: true
+    list_urls:
+      - "https://www.lancers.jp/work/search?open=1&sort=started"
+    link_pattern: "https://www\\.lancers\\.jp/work/detail/(\\d+)"
+    login_url: "https://www.lancers.jp/user/login"
+
+  - name: coconala
+    label: ココナラ
+    enabled: true
+    list_urls:
+      # 公開依頼の一覧
+      - "https://coconala.com/requests"
+    link_pattern: "https://coconala\\.com/requests/(\\d+)"
+    login_url: "https://coconala.com/login"
+
+  - name: mamaworks
+    label: ママワークス
+    # URL の形が未確認のため既定はオフ。
+    # `python scripts/job_crawl.py links mamaworks` で案件リンクの形を確認し、
+    # link_pattern を直してから true にしてください。
+    enabled: false
+    list_urls:
+      - "https://mamaworks.jp/"
+    link_pattern: "https://mamaworks\\.jp/[^\"'\\s]*?(\\d{3,})"
+    login_url: "https://mamaworks.jp/"

@@ -14,6 +14,7 @@
 | notion-daily-log | `/notion-daily-log` | その日の作業を Notion「デイリー学習ログ」に1件追加する | リポジトリ | 有効 |
 | skill-catalog-add | `/skill-catalog-add` | 作ったスキルを Notion「スキルカタログ」に1行登録する | リポジトリ | 有効 |
 | skill-catalog-sync | `/skill-catalog-sync` | 全スキルをスキャンして、この索引と Notion カタログを差分更新する（削除はしない） | リポジトリ | 有効 |
+| job-apply | `/job-apply` | 案件台帳の ID（例: 000313）から応募文を生成する。送信は本人が行う | リポジトリ | 有効 |
 
 ## 保存場所
 

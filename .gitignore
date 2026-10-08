@@ -6,3 +6,8 @@ __pycache__/
 *.pyc
 .venv/
 venv/
+
+# 案件チェック（個人データ・ログイン情報はコミットしない）
+data/
+.chrome-profile/
+*service-account*.json

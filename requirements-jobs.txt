@@ -1,0 +1,10 @@
+# 案件チェック自動化（scripts/job_*.py）用。記事生成用の requirements.txt とは別
+anthropic
+PyYAML
+pydantic
+
+# Chrome 巡回（インストール後に一度: python -m playwright install chromium ※Chrome があれば不要）
+playwright
+
+# Google スプレッドシート連携（任意）
+gspread
