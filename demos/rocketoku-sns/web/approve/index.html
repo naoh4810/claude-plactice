@@ -1,0 +1,114 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>投稿案の承認</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "IPAGothic", "Hiragino Sans", "Meiryo", sans-serif; background: #f4f5f2; color: #1f2328; }
+  header { background: #1f4e5f; color: #fff; padding: 14px 24px; display: flex; align-items: center; gap: 24px; }
+  header h1 { margin: 0; font-size: 19px; }
+  header .note { font-size: 12px; opacity: .85; }
+  .bar { display: flex; gap: 10px; align-items: center; padding: 12px 24px; background: #fff; border-bottom: 1px solid #ddd; font-size: 14px; }
+  .count { padding: 4px 12px; border-radius: 14px; background: #eef1f4; }
+  .count b { margin-left: 4px; }
+  .bar .spacer { flex: 1; }
+  a.btn, button { font-family: inherit; font-size: 13px; padding: 7px 14px; border-radius: 6px; border: 1px solid #9aa5b1; background: #fff; cursor: pointer; color: #1f2328; text-decoration: none; }
+  .primary { background: #1f6f4a; border-color: #1f6f4a; color: #fff; }
+  .warn { border-color: #b4441f; color: #b4441f; }
+  main { display: grid; grid-template-columns: 1fr 340px; gap: 18px; padding: 18px 24px; }
+  .cards { display: flex; flex-direction: column; gap: 14px; }
+  .card { background: #fff; border-radius: 10px; padding: 14px 16px; border-left: 5px solid #c9ced6; }
+  .card.approved { border-left-color: #1f6f4a; }
+  .card.rejected { border-left-color: #b4441f; opacity: .75; }
+  .head { display: flex; align-items: center; gap: 10px; margin-bottom: 8px; font-size: 13px; }
+  .pf { font-weight: bold; padding: 2px 10px; border-radius: 10px; color: #fff; font-size: 12px; }
+  .pf.Instagram { background: #b4367a; } .pf.X { background: #222; } .pf.TikTok { background: #0d7f86; }
+  .merchant { font-weight: bold; font-size: 14px; }
+  .status { margin-left: auto; font-size: 12px; padding: 2px 10px; border-radius: 10px; background: #eef1f4; }
+  .status.approved { background: #d9f1e2; color: #1f6f4a; } .status.rejected { background: #fbe1d7; color: #b4441f; }
+  .row { display: grid; grid-template-columns: 1fr 260px; gap: 14px; }
+  textarea { width: 100%; height: 150px; font-family: inherit; font-size: 13px; line-height: 1.6; padding: 8px; border: 1px solid #c9ced6; border-radius: 6px; }
+  .side label { display: block; font-size: 12px; color: #57606a; margin: 0 0 3px; }
+  .side input { width: 100%; font-family: inherit; font-size: 13px; padding: 6px 8px; border: 1px solid #c9ced6; border-radius: 6px; margin-bottom: 8px; }
+  .tags { font-size: 12px; color: #0b5cad; margin: 6px 0; }
+  .idea { font-size: 12px; color: #57606a; }
+  .checks { margin: 8px 0 0; padding: 8px 10px; background: #f7f7f4; border-radius: 6px; font-size: 12px; list-style: none; }
+  .checks li { margin: 2px 0; } .checks li.alert { color: #b4441f; font-weight: bold; }
+  .actions { display: flex; gap: 8px; margin-top: 10px; }
+  aside { background: #fff; border-radius: 10px; padding: 14px 16px; align-self: start; position: sticky; top: 12px; }
+  aside h2 { font-size: 15px; margin: 0 0 10px; }
+  aside li { font-size: 12.5px; margin-bottom: 8px; list-style: none; }
+  aside ul { padding: 0; margin: 0; }
+  aside .when { font-weight: bold; color: #1f4e5f; display: block; }
+  .empty { color: #8a939c; font-size: 13px; }
+</style>
+</head>
+<body>
+<header><h1>SNS投稿案の確認・承認</h1><span class="note" id="note"></span></header>
+<div class="bar">
+  <span class="count">未確認<b id="c-pending">0</b></span>
+  <span class="count">承認<b id="c-approved">0</b></span>
+  <span class="count">差し戻し<b id="c-rejected">0</b></span>
+  <span class="spacer"></span>
+  <a class="btn primary" href="/api/export.csv" id="export">承認済みをCSVで書き出し（予約投稿ツール用）</a>
+</div>
+<main>
+  <div class="cards" id="cards"></div>
+  <aside><h2>予約投稿キュー（承認済み）</h2><ul id="queue"></ul></aside>
+</main>
+<script>
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const LABEL = { pending: "未確認", approved: "承認済み", rejected: "差し戻し" };
+  let names = {};
+
+  async function save(id, patch) {
+    await fetch(`/api/drafts/${id}`, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(patch) });
+    load();
+  }
+
+  async function load() {
+    const [{ note, drafts }, m] = await Promise.all([fetch("/api/drafts").then(r => r.json()), fetch("/api/merchants").then(r => r.json())]);
+    names = Object.fromEntries(m.merchants.map(x => [x.id, x.name]));
+    $("note").textContent = note;
+    for (const s of ["pending", "approved", "rejected"]) $(`c-${s}`).textContent = drafts.filter(d => d.status === s).length;
+    $("cards").innerHTML = drafts.map(d => `
+      <div class="card ${d.status}" data-id="${d.id}">
+        <div class="head"><span class="pf ${d.platform}">${d.platform}</span><span class="merchant">${esc(names[d.merchant])}</span>
+          <span class="status ${d.status}">${LABEL[d.status]}</span></div>
+        <div class="row">
+          <div>
+            <textarea data-k="text">${esc(d.text)}</textarea>
+            <div class="tags">${d.hashtags.map(esc).join(" ")}</div>
+            <div class="idea">画像・動画：${esc(d.image_idea)}</div>
+          </div>
+          <div class="side">
+            <label>予約日時</label><input data-k="scheduled" value="${esc(d.scheduled)}">
+            <label>差し戻し理由・メモ</label><input data-k="reviewer_note" value="${esc(d.reviewer_note)}">
+            <ul class="checks">${d.checks.map(c => `<li class="${c.startsWith("⚠") ? "alert" : ""}">${c.startsWith("⚠") ? "" : "✓ "}${esc(c)}</li>`).join("")}</ul>
+          </div>
+        </div>
+        <div class="actions">
+          <button class="primary" data-act="approved">承認して予約キューへ</button>
+          <button class="warn" data-act="rejected">差し戻し</button>
+          ${d.status !== "pending" ? `<button data-act="pending">未確認に戻す</button>` : ""}
+        </div>
+      </div>`).join("");
+    const q = drafts.filter(d => d.status === "approved").sort((a, b) => a.scheduled.localeCompare(b.scheduled));
+    $("queue").innerHTML = q.length ? q.map(d => `<li><span class="when">${esc(d.scheduled)}・${d.platform}</span>${esc(names[d.merchant])}：${esc(d.text.split("\n")[0])}</li>`).join("")
+      : `<li class="empty">まだありません</li>`;
+  }
+
+  $("cards").addEventListener("click", e => {
+    const act = e.target.dataset.act;
+    if (!act) return;
+    const card = e.target.closest(".card");
+    const patch = { status: act };
+    card.querySelectorAll("[data-k]").forEach(el => patch[el.dataset.k] = el.value);
+    save(card.dataset.id, patch);
+  });
+  load();
+</script>
+</body>
+</html>

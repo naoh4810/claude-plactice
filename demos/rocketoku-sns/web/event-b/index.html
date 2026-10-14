@@ -1,0 +1,73 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>観光サイトB イベント登録</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "IPAGothic", "Hiragino Sans", "Meiryo", sans-serif; background: #fbf7ef; color: #2d2a26; }
+  header { background: #2f6b4f; color: #fff; padding: 12px 24px; }
+  header b { font-size: 17px; } header small { font-size: 11px; opacity: .85; margin-left: 8px; }
+  main { display: grid; grid-template-columns: 1fr 330px; gap: 20px; padding: 16px 24px; }
+  form { background: #fff; border: 1px solid #e3dccb; border-radius: 12px; padding: 16px 22px; }
+  h1 { font-size: 17px; margin: 0 0 12px; }
+  .f { margin-bottom: 11px; font-size: 13.5px; }
+  .f label.t { display: block; font-weight: bold; margin-bottom: 3px; }
+  .f small { color: #7a7266; font-weight: normal; margin-left: 6px; }
+  input[type=text], textarea, select { width: 100%; padding: 7px 9px; border: 1px solid #c9bfa8; border-radius: 6px; font-family: inherit; font-size: 14px; }
+  textarea { height: 58px; }
+  .pay label { margin-right: 14px; }
+  .counter { text-align: right; font-size: 12px; color: #7a7266; } .counter.over { color: #c62828; font-weight: bold; }
+  .btn { font-family: inherit; font-size: 14px; padding: 8px 20px; border-radius: 20px; border: none; background: #2f6b4f; color: #fff; cursor: pointer; }
+  .err { color: #c62828; font-size: 13px; min-height: 18px; }
+  aside { background: #fff; border: 1px solid #e3dccb; border-radius: 12px; padding: 14px 16px; align-self: start; }
+  aside h2 { font-size: 15px; margin: 0 0 10px; }
+  .item { border-bottom: 1px solid #eee5d3; padding: 8px 0; font-size: 13px; }
+  .tag { font-size: 11px; padding: 1px 8px; border-radius: 10px; background: #e5ecfb; color: #27489a; margin-left: 6px; } .tag.live { background: #dff3e4; color: #1f6b34; }
+</style>
+</head>
+<body>
+<header><b>観光サイトB<small>おでかけカレンダー イベント登録（デモ・架空）</small></b></header>
+<main>
+  <form id="form" autocomplete="off">
+    <h1>イベントを登録する</h1>
+    <div class="f"><label class="t">イベント名</label><input type="text" name="title"></div>
+    <div class="f"><label class="t">いつ<small>例：10月18日(土)〜11月30日(日) 16時〜</small></label><input type="text" name="when"></div>
+    <div class="f"><label class="t">エリア</label><select name="area"><option value="">選択してください</option><option>倉敷美観地区</option><option>児島</option><option>玉島</option><option>その他の倉敷市</option></select></div>
+    <div class="f"><label class="t">どこで</label><input type="text" name="place"></div>
+    <div class="f pay"><label class="t">支払い方法</label>
+      <label><input type="checkbox" name="pay" value="現金"> 現金</label>
+      <label><input type="checkbox" name="pay" value="クレジットカード"> クレジットカード</label>
+      <label><input type="checkbox" name="pay" value="ふるさと納税アプリ"> ふるさと納税アプリ</label></div>
+    <div class="f"><label class="t">PR文<small>100文字以内</small></label><textarea name="pr" id="pr"></textarea><div class="counter" id="counter">0 / 100</div></div>
+    <div class="f"><label class="t">主催者・連絡先</label><input type="text" name="organizer"></div>
+    <div class="err" id="err"></div>
+    <button class="btn" type="submit">登録する</button>
+  </form>
+  <aside><h2>登録済みのイベント</h2><div id="items"></div></aside>
+</main>
+<script src="/dropdown.js"></script>
+<script>
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  const count = () => { const n = [...$("pr").value].length; $("counter").textContent = `${n} / 100`; $("counter").classList.toggle("over", n > 100); return n; };
+  $("pr").addEventListener("input", count);
+  async function load() {
+    const rows = await fetch("/api/listings?site=b").then(r => r.json());
+    $("items").innerHTML = rows.map(x => `<div class="item">${esc(x.title)}<span class="tag ${x.status === "公開中" ? "live" : ""}">${x.status}</span><br><small>${esc(x.organizer)}</small></div>`).join("");
+  }
+  $("form").addEventListener("submit", async e => {
+    e.preventDefault();
+    if (count() > 100) { $("err").textContent = "PR文が100文字を超えています"; return; }
+    const fd = new FormData($("form"));
+    const item = Object.fromEntries([...fd.keys()].filter(k => k !== "pay").map(k => [k, fd.get(k)]));
+    item.pay = fd.getAll("pay");
+    const res = await fetch("/api/listings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ site: "b", item }) });
+    if (!res.ok) { const d = await res.json(); $("err").textContent = d.error + "（" + (d.fields || []).join(", ") + "）"; return; }
+    $("form").reset(); syncSelects(); count(); $("err").textContent = ""; load();
+  });
+  enhanceSelects();
+  load();
+</script>
+</body>
+</html>

@@ -1,0 +1,88 @@
+<!doctype html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<title>観光サイトA イベント投稿</title>
+<style>
+  * { box-sizing: border-box; }
+  body { margin: 0; font-family: "IPAGothic", "Hiragino Sans", "Meiryo", sans-serif; background: #f3f6fa; color: #1f2933; }
+  header { background: #1d5fa8; color: #fff; padding: 0 22px; height: 50px; display: flex; align-items: center; gap: 24px; }
+  header b { font-size: 17px; } header small { font-size: 11px; opacity: .85; margin-left: 6px; }
+  header span { font-size: 13px; opacity: .9; }
+  main { padding: 16px 26px; }
+  h1 { font-size: 18px; margin: 0 0 10px; }
+  .btn { font-family: inherit; font-size: 14px; padding: 8px 16px; border-radius: 6px; border: 1px solid #1d5fa8; background: #fff; color: #1d5fa8; cursor: pointer; }
+  .btn.primary { background: #1d5fa8; color: #fff; }
+  table { width: 100%; border-collapse: collapse; background: #fff; font-size: 13px; margin-top: 10px; }
+  th, td { border-bottom: 1px solid #e4e7eb; padding: 8px; text-align: left; } th { background: #e8eef6; }
+  .st { font-size: 12px; padding: 2px 8px; border-radius: 10px; background: #fdebc8; color: #8a5a00; } .st.live { background: #d6f2df; color: #1d6b35; }
+  form { background: #fff; border-radius: 8px; padding: 16px 22px; max-width: 920px; }
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 10px 24px; }
+  .f { font-size: 13.5px; } .f.wide { grid-column: span 2; }
+  .f label { display: block; font-weight: bold; margin-bottom: 3px; } .req::after { content: " *"; color: #d64545; }
+  input[type=text], textarea, select { width: 100%; padding: 7px 9px; border: 1px solid #9aa5b1; border-radius: 5px; font-family: inherit; font-size: 14px; }
+  textarea { height: 64px; }
+  .checks label { font-weight: normal; display: inline; margin-right: 16px; }
+  .err { color: #c62828; font-size: 13px; min-height: 18px; }
+  .hidden { display: none; }
+</style>
+</head>
+<body>
+<header><b>観光サイトA<small>イベント情報 投稿ページ（デモ・架空）</small></b><span>イベントを探す</span><span>エリア</span><span>主催者の方へ</span></header>
+<main>
+  <section id="list">
+    <h1>投稿したイベント</h1>
+    <button class="btn primary" id="new">＋ イベントを投稿する</button>
+    <table><thead><tr><th>ID</th><th>イベント名</th><th>主催者</th><th>開催期間</th><th>状態</th><th>投稿日時</th></tr></thead><tbody id="rows"></tbody></table>
+  </section>
+  <section id="formview" class="hidden">
+    <h1>イベントを投稿する</h1>
+    <form id="form" autocomplete="off">
+      <div class="grid">
+        <div class="f wide"><label class="req">イベント名</label><input type="text" name="title"></div>
+        <div class="f"><label class="req">主催者名</label><input type="text" name="organizer"></div>
+        <div class="f"><label>ジャンル</label><select name="genre"><option value="">選択してください</option><option>祭り・イベント</option><option>体験・ワークショップ</option><option>グルメ</option><option>アート・文化</option></select></div>
+        <div class="f"><label>開始日</label><input type="text" name="start" placeholder="例：2026/10/18"></div>
+        <div class="f"><label>終了日</label><input type="text" name="end" placeholder="例：2026/11/30（1日のみなら空欄）"></div>
+        <div class="f"><label>開催時間</label><input type="text" name="time"></div>
+        <div class="f"><label>会場</label><input type="text" name="place"></div>
+        <div class="f"><label>料金</label><input type="text" name="price"></div>
+        <div class="f"><label>お問い合わせ</label><input type="text" name="contact"></div>
+        <div class="f wide checks"><label style="font-weight:bold;display:block">特徴</label>
+          <label><input type="checkbox" name="tags" value="子ども歓迎"> 子ども歓迎</label>
+          <label><input type="checkbox" name="tags" value="予約制"> 予約制</label>
+          <label><input type="checkbox" name="tags" value="雨天決行"> 雨天決行</label>
+          <label><input type="checkbox" name="tags" value="キャッシュレス対応"> キャッシュレス対応</label></div>
+        <div class="f wide"><label>紹介文</label><textarea name="description"></textarea></div>
+      </div>
+      <div class="err" id="err"></div>
+      <button class="btn primary" type="submit">投稿する（審査へ）</button> <button class="btn" type="button" id="cancel">一覧に戻る</button>
+    </form>
+  </section>
+</main>
+<script src="/dropdown.js"></script>
+<script>
+  const $ = id => document.getElementById(id);
+  const esc = s => String(s ?? "").replace(/[&<>"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  async function load() {
+    const rows = await fetch("/api/listings?site=a").then(r => r.json());
+    $("rows").innerHTML = rows.map(x => `<tr><td>${x.id}</td><td>${esc(x.title)}</td><td>${esc(x.organizer)}</td><td>${esc([x.start, x.end].filter(Boolean).join("〜"))}</td>
+      <td><span class="st ${x.status === "掲載中" ? "live" : ""}">${x.status}</span></td><td>${x.created_at}</td></tr>`).join("");
+  }
+  const show = form => { $("list").classList.toggle("hidden", form); $("formview").classList.toggle("hidden", !form); };
+  $("new").addEventListener("click", () => { $("form").reset(); syncSelects(); $("err").textContent = ""; show(true); });
+  $("cancel").addEventListener("click", () => show(false));
+  $("form").addEventListener("submit", async e => {
+    e.preventDefault();
+    const fd = new FormData($("form"));
+    const item = Object.fromEntries([...fd.keys()].filter(k => k !== "tags").map(k => [k, fd.get(k)]));
+    item.tags = fd.getAll("tags");
+    const res = await fetch("/api/listings", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ site: "a", item }) });
+    if (!res.ok) { const d = await res.json(); $("err").textContent = d.error; return; }
+    show(false); load();
+  });
+  enhanceSelects();
+  load();
+</script>
+</body>
+</html>
