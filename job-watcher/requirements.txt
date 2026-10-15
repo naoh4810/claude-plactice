@@ -1,0 +1,8 @@
+# ブラウザ操作（ランサーズのbot対策を通すため実ブラウザで開く）
+playwright
+
+# Slack / スプレッドシート(GAS) への送信
+requests
+
+# 設定ファイル読み込み
+PyYAML

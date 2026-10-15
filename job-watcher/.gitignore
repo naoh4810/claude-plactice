@@ -1,0 +1,4 @@
+.env
+config.yml
+.browser-profile/
+run.log

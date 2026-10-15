@@ -1,0 +1,28 @@
+# config.yml にコピーして使う（config.yml は git に含めない）
+
+# 検索キーワード（それぞれのサイトで新着順に検索する）
+keywords:
+  - Python
+  - GAS
+  - 生成AI
+
+# タイトルにこの語を含む案件は除外
+exclude_words:
+  - アンケート
+  - モニター
+
+# 1キーワードあたり何ページ目まで見るか（1ページ ≒ CrowdWorks 50件 / ランサーズ 30件前後）
+max_pages: 1
+
+# 対象サイト
+sites:
+  crowdworks: true
+  lancers: true
+
+# ブラウザを画面に表示するか。
+# ランサーズは「人間確認」が出ることがあるので、最初は false（表示）で動かし、
+# 確認が出たら手で通す。Cookie は .browser-profile/ に保存され次回以降は通りやすくなる。
+headless: false
+
+# Slack の1メッセージに載せる最大件数（超えた分は「他 N 件」と表示）
+slack_max_items: 20
