@@ -1,0 +1,13 @@
+name = "link-tracker"
+main = "src/index.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+# クリック後に飛ばす先（ロケふる App Store ページ）
+TARGET_URL = "https://apps.apple.com/jp/app/id6503939543"
+
+[[d1_databases]]
+binding = "DB"
+database_name = "link-tracker"
+# `npx wrangler d1 create link-tracker` の出力に出る database_id に置き換える
+database_id = "REPLACE_WITH_YOUR_DATABASE_ID"
