@@ -37,6 +37,7 @@ STATE_FILE = ROOT / "state" / "used.json"
 TOPICS_FILE = ROOT / "config" / "topics.yml"
 SYSTEM_PROMPT_FILE = ROOT / "prompts" / "system_prompt.md"
 REVIEW_PROMPT_FILE = ROOT / "prompts" / "review_prompt.md"
+DIAGRAM_PROMPT_FILE = ROOT / "prompts" / "diagram_prompt.md"
 
 DEFAULT_MODEL = "claude-opus-5"
 
@@ -204,6 +205,80 @@ def attach_review(article_md: str, review_md: str) -> str:
     return f"{article_md}\n\n{REVIEW_START}\n{review_md}\n{REVIEW_END}\n"
 
 
+# --------------------------------------------------------------------------- #
+# 図解の自動挿入（Mermaid）
+# --------------------------------------------------------------------------- #
+_MERMAID_TYPES = (
+    "flowchart", "graph", "sequenceDiagram", "classDiagram",
+    "stateDiagram", "erDiagram", "journey", "mindmap",
+)
+
+
+def _extract_mermaid(text: str) -> str | None:
+    """モデル出力から Mermaid ブロック（＋任意のキャプション）を安全に取り出す。
+
+    図が不要（NONE）や、妥当な Mermaid が無い場合は None。
+    """
+    text = (text or "").strip()
+    if text.upper().startswith("NONE"):
+        return None
+    m = re.search(r"```mermaid\s*\n(.*?)```", text, re.S)
+    if not m:
+        return None
+    body = m.group(1).strip()
+    # 先頭が既知の図タイプで始まらないものは壊れた図とみなして捨てる
+    if not re.match(r"(" + "|".join(_MERMAID_TYPES) + r")\b", body):
+        return None
+
+    caption = ""
+    pre = text[: m.start()].strip().splitlines()
+    if pre:
+        last = pre[-1].strip()
+        if last.startswith("図") or last.startswith("**"):
+            caption = last
+    block = "```mermaid\n" + body + "\n```"
+    return f"{caption}\n\n{block}" if caption else block
+
+
+def generate_diagram(article_md: str, source_text: str) -> str | None:
+    """記事の核心を表す Mermaid 図を1つ生成する。不要なら None。"""
+    client = anthropic.Anthropic()
+    model = (
+        os.environ.get("DIAGRAM_MODEL")
+        or os.environ.get("ARTICLE_MODEL")
+        or DEFAULT_MODEL
+    )
+    user = (
+        "以下の【記事本文】に添える Mermaid 図を作ってください。"
+        "事実の確認用に【素材】も渡します。\n\n"
+        f"## 素材（学習ログ）\n{source_text}\n\n"
+        f"## 記事本文\n{article_md}\n"
+    )
+    resp = _create_message(
+        client,
+        model=model,
+        max_tokens=4000,
+        thinking={"type": "adaptive"},
+        output_config={"effort": "high"},
+        system=DIAGRAM_PROMPT_FILE.read_text(encoding="utf-8"),
+        messages=[{"role": "user", "content": user}],
+    )
+    if resp.stop_reason == "refusal":
+        raise RuntimeError(f"図解生成が拒否されました: {resp.stop_details}")
+    text = "".join(b.text for b in resp.content if b.type == "text")
+    return _extract_mermaid(text)
+
+
+def insert_diagram(article_md: str, diagram_block: str) -> str:
+    """図を導入文の直後（最初の ## 見出しの前）に挿入する。"""
+    lines = article_md.splitlines()
+    for i, line in enumerate(lines):
+        if line.startswith("## "):
+            return "\n".join(lines[:i] + [diagram_block, ""] + lines[i:])
+    return article_md.rstrip() + "\n\n" + diagram_block + "\n"
+
+
+
 
 # --------------------------------------------------------------------------- #
 # 保存
@@ -258,6 +333,18 @@ def main() -> int:
     print(f"今日のトピック: {title}")
 
     markdown = generate_article(source_text, config)
+
+    # 図解の自動挿入（ENABLE_DIAGRAM=false で無効化可能。既定は有効）
+    if os.environ.get("ENABLE_DIAGRAM", "true").lower() != "false":
+        try:
+            diagram = generate_diagram(markdown, source_text)
+            if diagram:
+                markdown = insert_diagram(markdown, diagram)
+                print("図解(Mermaid)を挿入しました。")
+            else:
+                print("図解は不要と判断しました（スキップ）。")
+        except Exception as exc:  # 図解が失敗しても記事はそのまま進める
+            print(f"図解生成に失敗（図なしで継続）: {exc}")
 
     # 自動精査（ENABLE_REVIEW=false で無効化可能。既定は有効）
     status = "draft"

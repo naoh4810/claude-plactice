@@ -36,6 +36,8 @@ jobs:
           ENABLE_WEB_SEARCH: ${{ vars.ENABLE_WEB_SEARCH }}
           ENABLE_REVIEW: ${{ vars.ENABLE_REVIEW }}
           REVIEW_MODEL: ${{ vars.REVIEW_MODEL }}
+          ENABLE_DIAGRAM: ${{ vars.ENABLE_DIAGRAM }}
+          DIAGRAM_MODEL: ${{ vars.DIAGRAM_MODEL }}
         run: python scripts/generate_article.py
 
       - name: Commit and push if there are changes
