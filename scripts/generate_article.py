@@ -18,6 +18,7 @@
 from __future__ import annotations
 
 import datetime as dt
+import hashlib
 import json
 import os
 import re
@@ -59,6 +60,23 @@ def save_used_keys(keys: set[str]) -> None:
     STATE_FILE.write_text(
         json.dumps(sorted(keys), ensure_ascii=False, indent=2), encoding="utf-8"
     )
+
+
+def emit_gh_output(**values: str) -> None:
+    """GitHub Actions のステップ出力に書き出す（ローカル実行では何もしない）。
+
+    承認ゲート（PR化）のワークフローが、作成された記事パス・PRタイトル・
+    提出用ブランチ名を受け取るために使う。値は単一行のみ（改行は無視）。
+    """
+    out = os.environ.get("GITHUB_OUTPUT")
+    if not out:
+        return
+    with open(out, "a", encoding="utf-8") as f:
+        for key, value in values.items():
+            value = str(value)
+            if "\n" in value:
+                continue
+            f.write(f"{key}={value}\n")
 
 
 # --------------------------------------------------------------------------- #
@@ -327,6 +345,7 @@ def main() -> int:
     if picked is None:
         print("記事化できる未使用トピックがありません。"
               "config/topics.yml に追加するか、Notionに学びを追記してください。")
+        emit_gh_output(created="false")
         return 0
 
     key, title, source_text = picked
@@ -363,6 +382,18 @@ def main() -> int:
 
     used.add(key)
     save_used_keys(used)
+
+    # 承認ゲート（PR化）用の情報をワークフローに渡す
+    article_title = extract_title(markdown, title)
+    today = dt.date.today().isoformat()
+    digest = hashlib.sha1(article_title.encode("utf-8")).hexdigest()[:8]
+    emit_gh_output(
+        created="true",
+        article_path=str(path.relative_to(ROOT)),
+        title=article_title,
+        status=status,
+        branch=f"article/{today}-{digest}",
+    )
     return 0
 
 

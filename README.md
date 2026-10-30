@@ -50,9 +50,24 @@ python scripts/generate_article.py
 | Secret | `NOTION_DAILY_LOG_DATABASE_ID` | 学習ログDBのID（任意） |
 | Variable | `ARTICLE_MODEL` | 例: `claude-opus-5`（任意） |
 | Variable | `ENABLE_WEB_SEARCH` | `true`/`false`（任意） |
+| Variable | `ENABLE_REVIEW` | 自動精査 `true`/`false`（任意・既定on） |
+| Variable | `ENABLE_DIAGRAM` | Mermaid図解 `true`/`false`（任意・既定on） |
+
+さらに**PRを自動で作らせる**ため、**Settings → Actions → General → Workflow permissions** で
+**「Allow GitHub Actions to create and approve pull requests」をON**にしてください（1回だけ）。
 
 登録後、Actionsタブの **Daily AI Article → Run workflow** で即テストできます。
 以降は毎朝 07:00 JST（cron: `0 22 * * *` UTC）に自動実行されます。
+
+### 毎日の流れ（承認ゲート）
+```
+生成 → 図解(Mermaid) → 自動精査 → Pull Request で提出 → あなたがMerge＝承認 → 本線入り
+```
+- 記事は直接コミットされず、**毎日1本のPR**として提出されます。
+- PRで本文・図・精査（`🔍 公開前チェック`）を確認し、**Merge すれば承認**。
+- 消化済み管理（`state/used.json`）だけは即座に本線へ反映されるので、
+  **PRを放置しても同じトピックのPRが量産されません**（未マージのPRが溜まるだけ）。
+- 公開前に `<!-- REVIEW:START -->`〜`<!-- REVIEW:END -->` の精査メモは削除してください。
 
 ---
 

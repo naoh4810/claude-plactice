@@ -1,6 +1,7 @@
 name: Daily AI Article
 
-# 毎日 07:00 JST（22:00 UTC）に記事を1本生成してコミットする。
+# 毎日 07:00 JST（22:00 UTC）に記事を1本生成し、Pull Request として提出する。
+# PR を Merge すると承認＝記事が本線に入る（人間の確認ゲート）。
 # 手動実行（Actionsタブの Run workflow）でもすぐ試せる。
 on:
   schedule:
@@ -9,6 +10,7 @@ on:
 
 permissions:
   contents: write
+  pull-requests: write
 
 jobs:
   generate:
@@ -28,6 +30,7 @@ jobs:
           pip install -r requirements.txt
 
       - name: Generate article
+        id: gen
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           NOTION_API_KEY: ${{ secrets.NOTION_API_KEY }}
@@ -40,14 +43,54 @@ jobs:
           DIAGRAM_MODEL: ${{ vars.DIAGRAM_MODEL }}
         run: python scripts/generate_article.py
 
-      - name: Commit and push if there are changes
+      - name: Open pull request for review
+        if: steps.gen.outputs.created == 'true'
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          BASE: ${{ github.ref_name }}
+          BRANCH: ${{ steps.gen.outputs.branch }}
+          TITLE: ${{ steps.gen.outputs.title }}
+          ARTICLE: ${{ steps.gen.outputs.article_path }}
+          STATUS: ${{ steps.gen.outputs.status }}
         run: |
           git config user.name "github-actions[bot]"
           git config user.email "github-actions[bot]@users.noreply.github.com"
-          if [ -n "$(git status --porcelain articles state)" ]; then
-            git add articles state
-            git commit -m "chore: add daily article ($(date +%Y-%m-%d))"
-            git push
-          else
-            echo "生成された変更はありませんでした。"
+
+          # 1) used.json（消化済み管理）だけ先に本線へ反映。
+          #    PR が未マージでも、同じトピックの PR が毎日量産されるのを防ぐ。
+          if [ -n "$(git status --porcelain state)" ]; then
+            git add state
+            git commit -m "chore: mark topic used ($(date +%Y-%m-%d))"
+            git push origin "HEAD:${BASE}"
           fi
+
+          # 2) 記事は専用ブランチに載せて PR として提出（＝人間の承認ゲート）
+          git checkout -b "$BRANCH"
+          git add articles
+          git commit -m "article: ${TITLE}"
+          git push -u origin "$BRANCH"
+
+          # 3) PR 作成（Merge＝承認）
+          cat > pr_body.md <<EOF
+          自動生成された記事ドラフトです（status: ${STATUS}）。
+
+          確認してほしいこと:
+          - 本文と 図解(Mermaid) の内容
+          - 末尾の「🔍 公開前チェック（自動精査）」の指摘（特に事実確認）
+
+          このPRを Merge すると承認となり、記事が本線に入ります。
+          公開前に <!-- REVIEW:START --> 〜 <!-- REVIEW:END --> の精査メモは削除してください。
+
+          対象ファイル: ${ARTICLE}
+          EOF
+
+          gh pr create \
+            --base "$BASE" \
+            --head "$BRANCH" \
+            --title "記事ドラフト: ${TITLE}" \
+            --body-file pr_body.md \
+          || echo "::warning::PR作成に失敗しました。Settings → Actions → General → Workflow permissions で 'Allow GitHub Actions to create and approve pull requests' を有効化してください。ブランチ ${BRANCH} は push 済みなので、手動でも PR を作成できます。"
+
+      - name: No article today
+        if: steps.gen.outputs.created != 'true'
+        run: echo "新しい未使用トピックが無かったため、本日は記事を作成しませんでした。"
