@@ -34,6 +34,8 @@ jobs:
           NOTION_DAILY_LOG_DATABASE_ID: ${{ secrets.NOTION_DAILY_LOG_DATABASE_ID }}
           ARTICLE_MODEL: ${{ vars.ARTICLE_MODEL }}
           ENABLE_WEB_SEARCH: ${{ vars.ENABLE_WEB_SEARCH }}
+          ENABLE_REVIEW: ${{ vars.ENABLE_REVIEW }}
+          REVIEW_MODEL: ${{ vars.REVIEW_MODEL }}
         run: python scripts/generate_article.py
 
       - name: Commit and push if there are changes

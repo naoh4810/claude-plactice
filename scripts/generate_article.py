@@ -36,6 +36,7 @@ ARTICLES_DIR = ROOT / "articles"
 STATE_FILE = ROOT / "state" / "used.json"
 TOPICS_FILE = ROOT / "config" / "topics.yml"
 SYSTEM_PROMPT_FILE = ROOT / "prompts" / "system_prompt.md"
+REVIEW_PROMPT_FILE = ROOT / "prompts" / "review_prompt.md"
 
 DEFAULT_MODEL = "claude-opus-5"
 
@@ -165,6 +166,46 @@ def generate_article(source_text: str, config: dict) -> str:
 
 
 # --------------------------------------------------------------------------- #
+# 自動精査（生成記事を素材と突き合わせて公開前チェックを付ける）
+# --------------------------------------------------------------------------- #
+REVIEW_START = "<!-- REVIEW:START -->"
+REVIEW_END = "<!-- REVIEW:END -->"
+
+
+def review_article(article_md: str, source_text: str) -> str:
+    """生成記事を素材と突き合わせて精査し、公開前チェック(markdown)を返す。"""
+    client = anthropic.Anthropic()
+    model = (
+        os.environ.get("REVIEW_MODEL")
+        or os.environ.get("ARTICLE_MODEL")
+        or DEFAULT_MODEL
+    )
+    user = (
+        "以下の【素材】をもとに書かれた【記事ドラフト】を精査してください。\n\n"
+        f"## 素材（学習ログ＝事実の出どころ）\n{source_text}\n\n"
+        f"## 記事ドラフト\n{article_md}\n"
+    )
+    resp = _create_message(
+        client,
+        model=model,
+        max_tokens=8000,
+        thinking={"type": "adaptive"},
+        output_config={"effort": "high"},
+        system=REVIEW_PROMPT_FILE.read_text(encoding="utf-8"),
+        messages=[{"role": "user", "content": user}],
+    )
+    if resp.stop_reason == "refusal":
+        raise RuntimeError(f"精査が拒否されました: {resp.stop_details}")
+    return "".join(b.text for b in resp.content if b.type == "text").strip()
+
+
+def attach_review(article_md: str, review_md: str) -> str:
+    """精査結果を、公開時に機械的に剥がせるマーカーで囲んで記事末尾に追記する。"""
+    return f"{article_md}\n\n{REVIEW_START}\n{review_md}\n{REVIEW_END}\n"
+
+
+
+# --------------------------------------------------------------------------- #
 # 保存
 # --------------------------------------------------------------------------- #
 def slugify(title: str) -> str:
@@ -179,7 +220,8 @@ def extract_title(markdown: str, fallback: str) -> str:
     return fallback
 
 
-def save_article(markdown: str, topic_title: str, source_key: str) -> Path:
+def save_article(markdown: str, topic_title: str, source_key: str,
+                 status: str = "draft") -> Path:
     today = dt.date.today().isoformat()
     title = extract_title(markdown, topic_title)
     ARTICLES_DIR.mkdir(parents=True, exist_ok=True)
@@ -189,7 +231,7 @@ def save_article(markdown: str, topic_title: str, source_key: str) -> Path:
         "---\n"
         f'title: "{title.replace(chr(34), chr(39))}"\n'
         f"date: {today}\n"
-        "status: draft\n"
+        f"status: {status}\n"
         f'source: "{source_key}"\n'
         "---\n\n"
     )
@@ -216,7 +258,20 @@ def main() -> int:
     print(f"今日のトピック: {title}")
 
     markdown = generate_article(source_text, config)
-    path = save_article(markdown, title, key)
+
+    # 自動精査（ENABLE_REVIEW=false で無効化可能。既定は有効）
+    status = "draft"
+    if os.environ.get("ENABLE_REVIEW", "true").lower() != "false":
+        try:
+            review_md = review_article(markdown, source_text)
+            if review_md:
+                markdown = attach_review(markdown, review_md)
+                status = "reviewed"
+                print("自動精査を付与しました（status: reviewed）。")
+        except Exception as exc:  # 精査が失敗しても記事は draft として残す
+            print(f"自動精査に失敗（draft のまま保存します）: {exc}")
+
+    path = save_article(markdown, title, key, status)
     print(f"記事を保存しました: {path.relative_to(ROOT)}")
 
     used.add(key)
